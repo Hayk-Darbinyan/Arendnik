@@ -1,6 +1,6 @@
 export default {
 en: {
-  rooms: ['Home', 'About', 'Why Arendnik', 'Tools', 'How it works', 'Tenants', 'App', 'Pricing', 'Contact'],
+  rooms: ['Home', 'About', 'Why Arendnik', 'Tools', 'How it works', 'Tenants', 'App', 'Pricing', 'Contact'], login: 'Log in',
   tagline: 'Your Comprehensive Real Estate Management Solution',
   sub: 'Arendnik is a platform designed to support real estate landlords and professional property managers.',
   cta: ['How it works', 'Pricing'],
@@ -25,7 +25,7 @@ en: {
   agentsT: 'Special offer for real estate agents', agentsP: 'There is a special offer available for real estate agents. For details, contact:'
 },
 ru: {
-  rooms: ['Главная', 'О платформе', 'Почему Arendnik', 'Инструменты', 'Как это работает', 'Арендаторам', 'Приложение', 'Тарифы', 'Контакты'],
+  rooms: ['Главная', 'О платформе', 'Почему Arendnik', 'Инструменты', 'Как это работает', 'Арендаторам', 'Приложение', 'Тарифы', 'Контакты'], login: 'Войти',
   tagline: 'Комплексное решение для управления недвижимостью',
   sub: 'Arendnik — платформа, созданная для поддержки арендодателей и профессиональных управляющих недвижимостью.',
   cta: ['Как это работает', 'Тарифы'],
@@ -50,7 +50,7 @@ ru: {
   agentsT: 'Специальное предложение для агентов по недвижимости', agentsP: 'Для агентов по недвижимости есть специальное предложение. Подробности по телефону:'
 },
 hy: {
-  rooms: ['Գլխավոր', 'Մեր մասին', 'Ինչու Arendnik', 'Գործիքներ', 'Ինչպես է աշխատում', 'Վարձակալներին', 'Հավելված', 'Սակագներ', 'Կապ'],
+  rooms: ['Գլխավոր', 'Մեր մասին', 'Ինչու Arendnik', 'Գործիքներ', 'Ինչպես է աշխատում', 'Վարձակալներին', 'Հավելված', 'Սակագներ', 'Կապ'], login: 'Մուտք',
   tagline: 'Անշարժ գույքի կառավարման ամբողջական լուծում',
   sub: 'Arendnik-ը հարթակ է, որը նախատեսված է անշարժ գույքի վարձատուներին և գույքի կառավարման մասնագետներին աջակցելու համար։',
   cta: ['Ինչպես է աշխատում', 'Սակագներ'],
