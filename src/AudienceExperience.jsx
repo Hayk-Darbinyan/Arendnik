@@ -63,7 +63,7 @@ function Welcome({ lang, onChoose, onLanguageChange }) {
             ))}
           </div>
         </div>
-        <div className="welcome-footer"><span>Arendnik</span><span>Armenia <i /> Property, made clearer</span></div>
+        <div className="welcome-footer"><span>Arendnik</span><span>{t.welcomeFooterPlace}<i />{t.welcomeFooterLine}</span></div>
       </section>
       <div className="welcome-art" aria-hidden="true"><span /><span /><span /></div>
     </main>
@@ -123,6 +123,26 @@ function PersonaPage({ lang, index, onChoose, onPlatform, onLanguageChange }) {
   const role = t.roles[index];
   const source = T[lang];
   const phone = "+374 55 888 984";
+  const featureSection = (
+    <section className="experience-features" id="experience-features">
+      <div className="experience-section-heading"><span className="experience-eyebrow"><i />{role.kicker}</span><h2>{role.featureTitle}</h2><p>{role.featureIntro}</p></div>
+      <div className="experience-feature-grid">
+        {role.features.map(([title, text], i) => <article className="experience-feature" key={title}><span className="feature-number">0{i + 1}</span><span className="feature-symbol">{symbols[(i + index) % symbols.length]}</span><h3>{title}</h3><p>{text}</p><span className="feature-rule" /></article>)}
+      </div>
+    </section>
+  );
+  const workflowSection = (
+    <section className="experience-flow">
+      <div className="experience-flow-heading"><span className="experience-eyebrow"><i />{t.workflowLabel}</span><h2>{role.workflowTitle}</h2></div>
+      <ol className="experience-flow-list">{role.workflow.map((step, i) => <li key={step}><span>0{i + 1}</span><b>{step}</b><i>↗</i></li>)}</ol>
+    </section>
+  );
+  const mobileSection = (
+    <section className="experience-mobile" id="experience-mobile">
+      <div className="experience-mobile-copy"><span className="experience-eyebrow"><i />{role.visualTitle}</span><h2>{role.mobileTitle}</h2><p>{role.mobileCopy}</p><ul>{role.mobileItems.map((item) => <li key={item}><span>✓</span>{item}</li>)}</ul></div>
+      <PhonePreview role={role} index={index} />
+    </section>
+  );
   return (
     <div className={`persona-page persona-${index}`}>
       <header className="experience-header persona-header">
@@ -150,26 +170,15 @@ function PersonaPage({ lang, index, onChoose, onPlatform, onLanguageChange }) {
             </div>
             <div className="persona-proof"><span className="proof-symbol">✓</span><span>{role.features[0][0]}</span><i /> <span>{role.features[1][0]}</span></div>
           </div>
-          <div className="persona-hero-visual">
-            <div className="persona-photo" style={{ backgroundImage: `url(${images[index]})` }} />
-            <ProductWindow role={role} index={index} />
-            <span className="visual-caption">{role.visualNote}<i>↗</i></span>
+          <div className={`persona-hero-visual${index === 2 ? " persona-phone-hero" : ""}`}>
+            {index === 2 ? <><div className="persona-photo" style={{ backgroundImage: `url(${images[index]})` }} /><PhonePreview role={role} index={index} /></> : <><div className="persona-photo" style={{ backgroundImage: `url(${images[index]})` }} /><ProductWindow role={role} index={index} /><span className="visual-caption">{role.visualNote}<i>↗</i></span></>}
           </div>
         </section>
-        <section className="experience-features" id="experience-features">
-          <div className="experience-section-heading"><span className="experience-eyebrow"><i />{role.kicker}</span><h2>{role.featureTitle}</h2><p>{role.featureIntro}</p></div>
-          <div className="experience-feature-grid">
-            {role.features.map(([title, text], i) => <article className="experience-feature" key={title}><span className="feature-number">0{i + 1}</span><span className="feature-symbol">{symbols[(i + index) % symbols.length]}</span><h3>{title}</h3><p>{text}</p><span className="feature-rule" /></article>)}
-          </div>
-        </section>
-        <section className="experience-flow">
-          <div className="experience-flow-heading"><span className="experience-eyebrow"><i />AREN­DNIK WORKFLOW</span><h2>{role.workflowTitle}</h2></div>
-          <ol className="experience-flow-list">{role.workflow.map((step, i) => <li key={step}><span>0{i + 1}</span><b>{step}</b><i>↗</i></li>)}</ol>
-        </section>
-        <section className="experience-mobile" id="experience-mobile">
-          <div className="experience-mobile-copy"><span className="experience-eyebrow"><i />{role.visualTitle}</span><h2>{role.mobileTitle}</h2><p>{role.mobileCopy}</p><ul>{role.mobileItems.map((item) => <li key={item}><span>✓</span>{item}</li>)}</ul></div>
-          <PhonePreview role={role} index={index} />
-        </section>
+        {index === 2 && mobileSection}
+        {index === 1 && workflowSection}
+        {featureSection}
+        {index !== 1 && workflowSection}
+        {index !== 2 && mobileSection}
         <section className="experience-pricing" id="experience-pricing">
           <div><span className="experience-eyebrow"><i />{source.priceT}</span><h2>{source.price[0][1]}</h2><p>{source.price[0][4]}</p></div>
           <div className="experience-pricing-detail"><span>{source.price[1][0]}</span><b>{source.price[1][1]} <small>{source.price[1][2]}</small></b><p>{source.price[1][5].join(" · ")}</p></div>

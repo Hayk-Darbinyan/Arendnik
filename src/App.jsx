@@ -687,9 +687,6 @@ export default function App() {
       <header className="hd" ref={head}>
         <div className="w">
           <Logo />
-          <button className="platform-back" type="button" onClick={() => setShowPlatform(false)}>
-            {t.audienceNav}
-          </button>
           <nav className="nav">
             {links.map((i) => (
               <a key={i} href={"#" + ANCHORS[i]}>

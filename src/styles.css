@@ -2532,7 +2532,7 @@ h1 {
     margin: 1.1rem 0 1rem;
     font-size: clamp(2.55rem, 5vw, 4.5rem);
     line-height: 1.08;
-    letter-spacing: -.04em;
+    letter-spacing: 0;
     font-weight: 650;
 }
 
@@ -2773,7 +2773,7 @@ h1 {
     margin: 1.25rem 0 1.15rem;
     font-size: clamp(2.7rem, 4.45vw, 4.55rem);
     line-height: 1.06;
-    letter-spacing: -.045em;
+    letter-spacing: 0;
     font-weight: 660;
 }
 
@@ -2868,6 +2868,25 @@ h1 {
     display: flex;
     align-items: center;
     animation: experience-rise .8s .2s both;
+}
+
+.persona-phone-hero {
+    justify-content: center;
+}
+
+.persona-phone-hero .persona-photo {
+    inset: 6% 8% 2% 12%;
+}
+
+.persona-phone-hero .persona-photo::after {
+    background: rgba(255, 255, 255, .38);
+}
+
+.persona-phone-hero .experience-phone {
+    z-index: 1;
+    width: 274px;
+    height: 480px;
+    transform: rotate(-3deg);
 }
 
 .persona-photo {
@@ -3314,7 +3333,7 @@ h1 {
     margin: 14px 0 12px;
     font-size: clamp(2rem, 3.4vw, 3.25rem);
     line-height: 1.12;
-    letter-spacing: -.035em;
+    letter-spacing: 0;
     font-weight: 650;
 }
 

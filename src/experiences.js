@@ -3,6 +3,8 @@ const copy = {
     welcomeKicker: "A clearer way to manage property",
     welcomeTitle: "Your Arendnik experience starts here.",
     welcomeCopy: "Choose the role that best describes you. We’ll show you the tools and workflows that matter to your day.",
+    welcomeFooterPlace: "Armenia",
+    welcomeFooterLine: "Property, made clearer",
     chooseLabel: "I’m here as a",
     enter: "Explore this experience",
     changeRole: "Change audience",
@@ -10,6 +12,7 @@ const copy = {
     pricing: "Pricing",
     contact: "Contact",
     back: "All audiences",
+    workflowLabel: "ARENDNIK WORKFLOW",
     roles: [
       {
         name: "Property community",
@@ -101,6 +104,8 @@ const copy = {
     welcomeKicker: "Գույքի կառավարման ավելի հստակ ձև",
     welcomeTitle: "Ձեր Arendnik փորձառությունը սկսվում է այստեղ։",
     welcomeCopy: "Ընտրեք ձեզ համապատասխանող դերը, և կտեսնեք ձեր առօրյա աշխատանքի համար կարևոր գործիքներն ու գործընթացները։",
+    welcomeFooterPlace: "Հայաստան",
+    welcomeFooterLine: "Գույքի կառավարումը՝ ավելի հստակ",
     chooseLabel: "Ես այստեղ եմ որպես՝",
     enter: "Բացել այս փորձառությունը",
     changeRole: "Փոխել լսարանը",
@@ -108,6 +113,7 @@ const copy = {
     pricing: "Սակագներ",
     contact: "Կապ",
     back: "Բոլոր լսարանները",
+    workflowLabel: "ԱՇԽԱՏԱՆՔԱՅԻՆ ԳՈՐԾԸՆԹԱՑ",
     roles: [
       {
         name: "Համատիրություն",
@@ -199,6 +205,8 @@ const copy = {
     welcomeKicker: "Понятное управление недвижимостью",
     welcomeTitle: "Ваш опыт работы с Arendnik начинается здесь.",
     welcomeCopy: "Выберите подходящую роль. Мы покажем инструменты и процессы, важные для вашей повседневной работы.",
+    welcomeFooterPlace: "Армения",
+    welcomeFooterLine: "Понятное управление недвижимостью",
     chooseLabel: "Я здесь как",
     enter: "Посмотреть возможности",
     changeRole: "Выбрать другую аудиторию",
@@ -206,6 +214,7 @@ const copy = {
     pricing: "Тарифы",
     contact: "Контакты",
     back: "Все аудитории",
+    workflowLabel: "РАБОЧИЙ ПРОЦЕСС ARENDNIK",
     roles: [
       {
         name: "Товарищество собственников",
