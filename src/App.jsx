@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router";
 import T from "./i18n.js";
 import { LINKS, PHONE } from "./links.js";
 import logo from "./assets/arendnik.png";
 import AudienceExperience from "./AudienceExperience.jsx";
+import audienceCopy from "./experiences.js";
 
 const img = (id, w = 900) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=60`;
@@ -579,14 +581,17 @@ function PhoneDemo({ t }) {
 
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem("lang") || "en");
-  const [role, setRole] = useState(() => {
-    const stored = sessionStorage.getItem("audienceRole");
-    const parsed = Number(stored);
-    return stored !== null && Number.isInteger(parsed) && parsed >= 0 && parsed < 3
-      ? parsed
-      : null;
-  });
-  const [showPlatform, setShowPlatform] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const rolePaths = ["/community", "/broker", "/tenant"];
+  const roleSlugs = ["community", "broker", "tenant"];
+  const pathname = location.pathname.replace(/\/+$/, "") || "/";
+  const platformMatch = pathname.match(/^\/platform\/(community|broker|tenant)$/);
+  const platformRole = platformMatch ? roleSlugs.indexOf(platformMatch[1]) : -1;
+  const routeRole = rolePaths.indexOf(pathname);
+  const role = pathname === "/" ? null : platformRole >= 0 ? platformRole : routeRole;
+  const showPlatform = platformRole >= 0;
+  const validPath = pathname === "/" || role >= 0;
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const bar = useRef(),
@@ -656,15 +661,18 @@ export default function App() {
 
   const chooseRole = (nextRole) => {
     if (nextRole === undefined) {
-      sessionStorage.removeItem("audienceRole");
-      setRole(null);
+      navigate("/");
     } else {
-      sessionStorage.setItem("audienceRole", String(nextRole));
-      setRole(nextRole);
+      navigate(rolePaths[nextRole] || "/");
     }
-    setShowPlatform(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const returnToAudience = () => {
+    navigate(rolePaths[role]);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
+  if (!validPath) return <Navigate to="/" replace />;
 
   if (!showPlatform) {
     return (
@@ -673,8 +681,8 @@ export default function App() {
         role={role}
         onChoose={chooseRole}
         onPlatform={() => {
-          setShowPlatform(true);
-          window.scrollTo({ top: 0, behavior: "instant" });
+          navigate(`/platform/${roleSlugs[role]}`);
+          window.scrollTo({ top: 0, behavior: "auto" });
         }}
         onLanguageChange={setLang}
       />
@@ -684,9 +692,12 @@ export default function App() {
   return (
     <>
       <div className="bar" ref={bar} />
-      <header className="hd" ref={head}>
+      <header className="hd platform-hd" ref={head}>
         <div className="w">
           <Logo />
+          <button className="platform-back hide-m" type="button" onClick={returnToAudience}>
+            <span aria-hidden="true">←</span> {audienceCopy[lang].returnLabel}
+          </button>
           <nav className="nav">
             {links.map((i) => (
               <a key={i} href={"#" + ANCHORS[i]}>
@@ -744,6 +755,12 @@ export default function App() {
           <a href="#audiences" onClick={() => setOpen(false)}>
             {t.audienceNav}
           </a>
+          <button className="platform-back" type="button" onClick={() => {
+            returnToAudience();
+            setOpen(false);
+          }}>
+            <span aria-hidden="true">←</span> {audienceCopy[lang].returnLabel}
+          </button>
           <a href="/auth-preview" onClick={() => setOpen(false)}>
             {t.login}
           </a>

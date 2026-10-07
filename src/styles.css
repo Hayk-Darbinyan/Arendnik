@@ -159,6 +159,24 @@ h3 {
     margin-left: auto
 }
 
+.platform-hd .w {
+    width: min(1320px, 96%);
+    gap: .8rem;
+}
+
+.platform-hd .nav {
+    flex: 1;
+    justify-content: center;
+    gap: clamp(.45rem, .85vw, .85rem);
+    margin-left: 0;
+    white-space: nowrap;
+}
+
+.platform-hd .nav a {
+    font-size: .8rem;
+    white-space: nowrap;
+}
+
 .nav a {
     text-decoration: none;
     font-size: .92rem;
@@ -318,6 +336,16 @@ h3 {
     text-decoration: none;
     font-weight: 500;
     border-bottom: 1px solid var(--line)
+}
+
+.mnav .platform-back {
+    width: 100%;
+    display: block;
+    padding: .8rem .2rem;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    text-align: left;
 }
 
 .btn {
@@ -2739,6 +2767,28 @@ h1 {
     color: var(--blue);
 }
 
+.experience-login {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 13px;
+    border: 1px solid var(--blue);
+    border-radius: 6px;
+    background: var(--blue);
+    color: #fff;
+    text-decoration: none;
+    font-size: .75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background .2s, transform .2s;
+}
+
+.experience-login:hover {
+    background: #172f91;
+    transform: translateY(-1px);
+}
+
 .persona-change {
     display: inline-flex;
     align-items: center;
@@ -3758,6 +3808,7 @@ h1 {
     .welcome-footer { font-size: .64rem; }
     .persona-header { gap: 10px; }
     .persona-header-actions { gap: 9px; }
+    .experience-login { min-height: 34px; padding-inline: 9px; font-size: .7rem; }
     .persona-change { font-size: 0; }
     .persona-change span { font-size: 1.1rem; }
     .persona-nav { justify-content: flex-start; gap: 0; overflow-x: auto; }

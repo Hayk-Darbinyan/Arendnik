@@ -12,6 +12,7 @@ const copy = {
     pricing: "Pricing",
     contact: "Contact",
     back: "All audiences",
+    returnLabel: "Back",
     workflowLabel: "ARENDNIK WORKFLOW",
     roles: [
       {
@@ -113,6 +114,7 @@ const copy = {
     pricing: "Սակագներ",
     contact: "Կապ",
     back: "Բոլոր լսարանները",
+    returnLabel: "Վերադառնալ",
     workflowLabel: "ԱՇԽԱՏԱՆՔԱՅԻՆ ԳՈՐԾԸՆԹԱՑ",
     roles: [
       {
@@ -214,6 +216,7 @@ const copy = {
     pricing: "Тарифы",
     contact: "Контакты",
     back: "Все аудитории",
+    returnLabel: "Назад",
     workflowLabel: "РАБОЧИЙ ПРОЦЕСС ARENDNIK",
     roles: [
       {

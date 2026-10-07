@@ -155,6 +155,7 @@ function PersonaPage({ lang, index, onChoose, onPlatform, onLanguageChange }) {
         </nav> */}
         <div className="persona-header-actions">
           <LanguageControl lang={lang} onLanguageChange={onLanguageChange} />
+          <a className="experience-login" href="/auth-preview">{source.login}</a>
           <button className="persona-change" type="button" onClick={onChoose}>{t.changeRole}<span>↗</span></button>
         </div>
       </header>
