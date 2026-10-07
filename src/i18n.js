@@ -1,6 +1,12 @@
 export default {
 en: {
   rooms: ['Home', 'About', 'Why Arendnik', 'Tools', 'How it works', 'Tenants', 'App', 'Pricing', 'Contact'], login: 'Log in',
+  audienceNav: 'For whom', audienceT: 'Arendnik for every part of the rental journey',
+  audiences: [
+    { label: 'Property Communities', title: 'For Property Communities', description: 'Manage your building’s daily operations from one platform. Track payments, resident requests, maintenance tasks, and financial processes in one simple and organized system.' },
+    { label: 'Brokers & Property Managers', title: 'For Brokers & Property Managers', description: 'Manage properties and rental operations from one platform. Keep track of properties, tenants, payments, and ongoing issues while keeping your daily work organized and efficient.' },
+    { label: 'Tenants', title: 'For Tenants', description: 'Manage everything related to your rental from one platform. Track payments, submit maintenance requests, receive notifications, and stay connected with property management.' }
+  ],
   tagline: 'Your Comprehensive Real Estate Management Solution',
   sub: 'Arendnik is a platform designed to support real estate landlords and professional property managers.',
   cta: ['How it works', 'Pricing'],
@@ -26,6 +32,12 @@ en: {
 },
 ru: {
   rooms: ['Главная', 'О платформе', 'Почему Arendnik', 'Инструменты', 'Как это работает', 'Арендаторам', 'Приложение', 'Тарифы', 'Контакты'], login: 'Войти',
+  audienceNav: 'Для кого', audienceT: 'Arendnik для каждого участника аренды',
+  audiences: [
+    { label: 'Управляющие организации', title: 'Для управляющих организаций', description: 'Управляйте ежедневными процессами здания с одной платформы. Контролируйте платежи, обращения жителей, техническое обслуживание и финансовые процессы в удобной и организованной системе.' },
+    { label: 'Брокеры и менеджеры', title: 'Для брокеров и менеджеров', description: 'Управляйте объектами и процессами аренды с одной платформы. Контролируйте объекты, арендаторов, платежи и текущие вопросы, сохраняя рабочие процессы организованными и эффективными.' },
+    { label: 'Арендаторы', title: 'Для арендаторов', description: 'Управляйте всеми вопросами, связанными с арендой, через одну платформу. Отслеживайте платежи, отправляйте заявки на обслуживание, получайте уведомления и оставайтесь на связи с управляющей стороной.' }
+  ],
   tagline: 'Комплексное решение для управления недвижимостью',
   sub: 'Arendnik — платформа, созданная для поддержки арендодателей и профессиональных управляющих недвижимостью.',
   cta: ['Как это работает', 'Тарифы'],
@@ -51,6 +63,12 @@ ru: {
 },
 hy: {
   rooms: ['Գլխավոր', 'Մեր մասին', 'Ինչու Arendnik', 'Գործիքներ', 'Ինչպես է աշխատում', 'Վարձակալներին', 'Հավելված', 'Սակագներ', 'Կապ'], login: 'Մուտք',
+  audienceNav: 'Ում համար', audienceT: 'Arendnik-ը՝ վարձակալության բոլոր կողմերի համար',
+  audiences: [
+    { label: 'Համատիրություններ', title: 'Համատիրությունների համար', description: 'Կառավարեք շենքի առօրյա աշխատանքը մեկ հարթակից։ Հետևեք վճարումներին, բնակիչների դիմումներին, սպասարկման աշխատանքներին և շենքի ֆինանսական գործընթացներին՝ ավելի պարզ և կազմակերպված եղանակով։' },
+    { label: 'Բրոքերներ և մենեջերներ', title: 'Բրոքերների և մենեջերների համար', description: 'Կենտրոնացրեք գույքերի և վարձակալության կառավարման գործընթացները մեկ հարթակում։ Կառավարեք գույքերը, հետևեք վարձակալներին, վճարումներին և ընթացիկ խնդիրներին՝ ավելի արդյունավետ աշխատելու համար։' },
+    { label: 'Վարձակալներ', title: 'Վարձակալների համար', description: 'Կառավարեք վարձակալության հետ կապված ամեն ինչ մեկ հարթակից։ Հետևեք վճարումներին, ուղարկեք սպասարկման դիմումներ, ստացեք ծանուցումներ և կապ պահպանեք գույքի կառավարման պատասխանատուների հետ։' }
+  ],
   tagline: 'Անշարժ գույքի կառավարման ամբողջական լուծում',
   sub: 'Arendnik-ը հարթակ է, որը նախատեսված է անշարժ գույքի վարձատուներին և գույքի կառավարման մասնագետներին աջակցելու համար։',
   cta: ['Ինչպես է աշխատում', 'Սակագներ'],

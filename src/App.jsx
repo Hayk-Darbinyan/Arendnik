@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import T from "./i18n.js";
 import { LINKS, PHONE } from "./links.js";
 import logo from "./assets/arendnik.png";
+import AudienceExperience from "./AudienceExperience.jsx";
 
 const img = (id, w = 900) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=60`;
@@ -78,6 +79,23 @@ const P = {
   ),
   phone: (
     <path d="M6 3h4l1.5 4.5-2 1.5a11 11 0 006 6l1.5-2L21 14.5V18a2 2 0 01-2 2A16 16 0 014 5a2 2 0 012-2z" />
+  ),
+  building: (
+    <>
+      <path d="M4 21V5a2 2 0 012-2h12a2 2 0 012 2v16M2 21h20" />
+      <path d="M9 7h2m2 0h2M9 11h2m2 0h2M9 15h2m2 0h2M11 21v-3h2v3" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3" y="7" width="18" height="14" rx="2" />
+      <path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2M3 12h18M10 12v2h4v-2" />
+    </>
+  ),
+  home: (
+    <>
+      <path d="M3 10.5L12 3l9 7.5M5 9v12h14V9M9 21v-7h6v7" />
+    </>
   ),
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
 };
@@ -402,6 +420,44 @@ function Tools({ t }) {
   );
 }
 
+function UserTypeSelector({ t }) {
+  const [selected, setSelected] = useState(0);
+  const icons = ["building", "briefcase", "home"];
+  const audience = t.audiences[selected];
+  return (
+    <div className="audience-selector">
+      <div className="audience-options" aria-label={t.audienceNav}>
+        {t.audiences.map((item, i) => (
+          <button
+            key={item.label}
+            className={i === selected ? "audience-option on" : "audience-option"}
+            aria-pressed={i === selected}
+            onClick={() => setSelected(i)}
+          >
+            <span className="audience-option-icon"><Ic n={icons[i]} /></span>
+            <span>{item.label}</span>
+            <span className="audience-option-number">0{i + 1}</span>
+          </button>
+        ))}
+      </div>
+      <article className="audience-panel" key={selected} aria-live="polite">
+        <div className="audience-copy">
+          <span className="audience-kicker">0{selected + 1} / 03</span>
+          <h3>{audience.title}</h3>
+          <p>{audience.description}</p>
+        </div>
+        <div className="audience-visual" aria-hidden="true">
+          <div className="audience-orbit audience-orbit-outer" />
+          <div className="audience-orbit audience-orbit-inner" />
+          <span className="audience-mark"><Ic n={icons[selected]} /></span>
+          <span className="audience-spark audience-spark-one" />
+          <span className="audience-spark audience-spark-two" />
+        </div>
+      </article>
+    </div>
+  );
+}
+
 function How({ t }) {
   const [a, setA] = useState(0),
     [shown, setShown] = useState(() => new Set()),
@@ -523,6 +579,14 @@ function PhoneDemo({ t }) {
 
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem("lang") || "en");
+  const [role, setRole] = useState(() => {
+    const stored = sessionStorage.getItem("audienceRole");
+    const parsed = Number(stored);
+    return stored !== null && Number.isInteger(parsed) && parsed >= 0 && parsed < 3
+      ? parsed
+      : null;
+  });
+  const [showPlatform, setShowPlatform] = useState(false);
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const bar = useRef(),
@@ -551,6 +615,7 @@ export default function App() {
     };
   }, [langOpen]);
   useEffect(() => {
+    if (!showPlatform) return;
     const io = new IntersectionObserver(
       (es) =>
         es.forEach((e) => {
@@ -586,8 +651,35 @@ export default function App() {
       removeEventListener("scroll", tick);
       removeEventListener("resize", tick);
     };
-  }, []);
+  }, [showPlatform]);
   const links = [1, 3, 4, 5, 6, 7];
+
+  const chooseRole = (nextRole) => {
+    if (nextRole === undefined) {
+      sessionStorage.removeItem("audienceRole");
+      setRole(null);
+    } else {
+      sessionStorage.setItem("audienceRole", String(nextRole));
+      setRole(nextRole);
+    }
+    setShowPlatform(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  if (!showPlatform) {
+    return (
+      <AudienceExperience
+        lang={lang}
+        role={role}
+        onChoose={chooseRole}
+        onPlatform={() => {
+          setShowPlatform(true);
+          window.scrollTo({ top: 0, behavior: "instant" });
+        }}
+        onLanguageChange={setLang}
+      />
+    );
+  }
 
   return (
     <>
@@ -595,12 +687,16 @@ export default function App() {
       <header className="hd" ref={head}>
         <div className="w">
           <Logo />
+          <button className="platform-back" type="button" onClick={() => setShowPlatform(false)}>
+            {t.audienceNav}
+          </button>
           <nav className="nav">
             {links.map((i) => (
               <a key={i} href={"#" + ANCHORS[i]}>
                 {t.rooms[i]}
               </a>
             ))}
+            <a href="#audiences">{t.audienceNav}</a>
           </nav>
           <div className="lang" ref={langRef}>
             <button
@@ -648,6 +744,9 @@ export default function App() {
               {t.rooms[i]}
             </a>
           ))}
+          <a href="#audiences" onClick={() => setOpen(false)}>
+            {t.audienceNav}
+          </a>
           <a href="/auth-preview" onClick={() => setOpen(false)}>
             {t.login}
           </a>
@@ -814,6 +913,15 @@ export default function App() {
           </div>
         </section>
 
+        <section className="sec audience-section" id="audiences">
+          <div className="w">
+            <h2 className="rv c">{t.audienceT}</h2>
+            <div className="rv" style={{ "--i": 1 }}>
+              <UserTypeSelector t={t} />
+            </div>
+          </div>
+        </section>
+
         <section className="sec tn" id="tenants">
           <div className="w tnw">
             <div>
@@ -920,6 +1028,7 @@ export default function App() {
                 {t.rooms[i]}
               </a>
             ))}
+            <a href="#audiences">{t.audienceNav}</a>
           </nav>
           <small>© Arendnik</small>
         </div>
