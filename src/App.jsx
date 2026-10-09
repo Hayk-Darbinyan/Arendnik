@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router";
-import T from "./i18n.js";
-import { LINKS, PHONE } from "./links.js";
-import logo from "./assets/arendnik.png";
 import AudienceExperience from "./AudienceExperience.jsx";
-import audienceCopy from "./experiences.js";
+
 
 const img = (id, w = 900) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=60`;
@@ -13,6 +10,7 @@ const PHOTOS = [
   "1502672260266-1c1ef2d93688",
   "1560448204-e02f11c3d0e2",
 ];
+const PHONE = "+1 800 123 4567";
 const TEL = "tel:" + PHONE.replace(/\s/g, "");
 const ANCHORS = [
   "",
@@ -584,80 +582,22 @@ export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const rolePaths = ["/community", "/broker", "/tenant"];
-  const roleSlugs = ["community", "broker", "tenant"];
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
-  const platformMatch = pathname.match(/^\/platform\/(community|broker|tenant)$/);
-  const platformRole = platformMatch ? roleSlugs.indexOf(platformMatch[1]) : -1;
-  const routeRole = rolePaths.indexOf(pathname);
-  const role = pathname === "/" ? null : platformRole >= 0 ? platformRole : routeRole;
-  const showPlatform = platformRole >= 0;
-  const validPath = pathname === "/" || role >= 0;
-  const [open, setOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
-  const bar = useRef(),
-    head = useRef(),
-    b1 = useRef(),
-    b2 = useRef(),
-    langRef = useRef();
-  const t = T[lang];
+
   useEffect(() => {
     localStorage.setItem("lang", lang);
     document.documentElement.lang = lang;
   }, [lang]);
-  useEffect(() => {
-    if (!langOpen) return;
-    const closeOutside = (e) => {
-      if (!langRef.current?.contains(e.target)) setLangOpen(false);
-    };
-    const closeOnEscape = (e) => {
-      if (e.key === "Escape") setLangOpen(false);
-    };
-    document.addEventListener("pointerdown", closeOutside);
-    document.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("pointerdown", closeOutside);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [langOpen]);
-  useEffect(() => {
-    if (!showPlatform) return;
-    const io = new IntersectionObserver(
-      (es) =>
-        es.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("in");
-            io.unobserve(e.target);
-          }
-        }),
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" },
-    );
-    document.querySelectorAll(".rv").forEach((el) => io.observe(el));
-    let raf = 0;
-    const on = () => {
-      raf = 0;
-      const y = scrollY,
-        max = document.documentElement.scrollHeight - innerHeight;
-      bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
-      head.current.classList.toggle("sc", y > 8);
-      if (y < 1000) {
-        b1.current.style.transform = `translate3d(0,${y * 0.12}px,0)`;
-        b2.current.style.transform = `translate3d(0,${y * -0.08}px,0)`;
-      }
-    };
-    const tick = () => {
-      if (!raf) raf = requestAnimationFrame(on);
-    };
-    on();
-    addEventListener("scroll", tick, { passive: true });
-    addEventListener("resize", tick);
-    return () => {
-      io.disconnect();
-      cancelAnimationFrame(raf);
-      removeEventListener("scroll", tick);
-      removeEventListener("resize", tick);
-    };
-  }, [showPlatform]);
-  const links = [1, 3, 4, 5, 6, 7];
+
+  // Redirect legacy /platform/* routes
+  const platformMatch = pathname.match(/^\/platform\/(community|broker|tenant)$/);
+  if (platformMatch) {
+    return <Navigate to={"/" + platformMatch[1]} replace />;
+  }
+
+  const routeRole = rolePaths.indexOf(pathname);
+  const role = pathname === "/" ? null : routeRole;
+  const validPath = pathname === "/" || role >= 0;
 
   const chooseRole = (nextRole) => {
     if (nextRole === undefined) {
@@ -667,386 +607,16 @@ export default function App() {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const returnToAudience = () => {
-    navigate(rolePaths[role]);
-    window.scrollTo({ top: 0, behavior: "auto" });
-  };
 
   if (!validPath) return <Navigate to="/" replace />;
 
-  if (!showPlatform) {
-    return (
-      <AudienceExperience
-        lang={lang}
-        role={role}
-        onChoose={chooseRole}
-        onPlatform={() => {
-          navigate(`/platform/${roleSlugs[role]}`);
-          window.scrollTo({ top: 0, behavior: "auto" });
-        }}
-        onLanguageChange={setLang}
-      />
-    );
-  }
-
   return (
-    <>
-      <div className="bar" ref={bar} />
-      <header className="hd platform-hd" ref={head}>
-        <div className="w">
-          <Logo />
-          <button className="platform-back hide-m" type="button" onClick={returnToAudience}>
-            <span aria-hidden="true">←</span> {audienceCopy[lang].returnLabel}
-          </button>
-          <nav className="nav">
-            {links.map((i) => (
-              <a key={i} href={"#" + ANCHORS[i]}>
-                {t.rooms[i]}
-              </a>
-            ))}
-            <a href="#audiences">{t.audienceNav}</a>
-          </nav>
-          <div className="lang" ref={langRef}>
-            <button
-              className="lang-current"
-              aria-label="Change language"
-              aria-expanded={langOpen}
-              aria-controls="language-options"
-              onClick={() => setLangOpen((o) => !o)}
-            >
-              {lang.toUpperCase()}
-              <span className="lang-chevron" aria-hidden="true" />
-            </button>
-            <div className="lang-menu" id="language-options" hidden={!langOpen}>
-              {["hy", "ru", "en"].map((l) => (
-                <button
-                  key={l}
-                  className={l === lang ? "on" : ""}
-                  aria-pressed={l === lang}
-                  onClick={() => {
-                    setLang(l);
-                    setLangOpen(false);
-                  }}
-                >
-                  {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-          <a className="btn sm hide-m" href="/auth-preview">
-            {t.login}
-          </a>
-          <button
-            className={"burger" + (open ? " open" : "")}
-            aria-label="Menu"
-            aria-expanded={open}
-            onClick={() => setOpen((o) => !o)}
-          >
-            <span />
-            <span />
-          </button>
-        </div>
-        <div className={"mnav" + (open ? " open" : "")}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <a key={i} href={"#" + ANCHORS[i]} onClick={() => setOpen(false)}>
-              {t.rooms[i]}
-            </a>
-          ))}
-          <a href="#audiences" onClick={() => setOpen(false)}>
-            {t.audienceNav}
-          </a>
-          <button className="platform-back" type="button" onClick={() => {
-            returnToAudience();
-            setOpen(false);
-          }}>
-            <span aria-hidden="true">←</span> {audienceCopy[lang].returnLabel}
-          </button>
-          <a href="/auth-preview" onClick={() => setOpen(false)}>
-            {t.login}
-          </a>
-        </div>
-      </header>
-
-      <main id="top">
-        <section className="hero">
-          <div className="blob b1" ref={b1} />
-          <div className="blob b2" ref={b2} />
-          <div className="w hg">
-            <div className="hc">
-              <span className="eyebrow rv">Arendnik</span>
-              <h1 className="rv" style={{ "--i": 1 }}>
-                {t.tagline}
-              </h1>
-              <p className="lead rv" style={{ "--i": 2 }}>
-                {t.sub}
-              </p>
-              <div className="ctas rv" style={{ "--i": 3 }}>
-                <a className="btn" href="#how">
-                  {t.cta[0]} <Ic n="arrow" />
-                </a>
-                <a className="btn ghost" href="#pricing">
-                  {t.cta[1]}
-                </a>
-              </div>
-              <div className="facts rv" style={{ "--i": 4 }}>
-                {t.stats.map(([n, s, l], i) => (
-                  <div key={i}>
-                    <Counter to={n} suffix={s} />
-                    <span>{l}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="note rv" style={{ "--i": 5 }}>
-                <Ic n="check" />
-                {t.price[0][4]}
-              </p>
-            </div>
-            <div className="hv rv" style={{ "--i": 2 }}>
-              <Photos />
-              <div className="dash">
-                <div className="side">
-                  {["pay", "chat", "tool", "chart"].map((n) => (
-                    <span key={n}>
-                      <Ic n={n} />
-                    </span>
-                  ))}
-                </div>
-                <div className="dm">
-                  <div className="dtabs">
-                    {t.badges.map((b, i) => (
-                      <span key={i} className={i === 0 ? "on" : ""}>
-                        {b}
-                      </span>
-                    ))}
-                  </div>
-                  <Mock kind="chart" />
-                </div>
-              </div>
-              <span className="fc f1">
-                <Ic n="pay" />
-                {t.tools[5]}
-              </span>
-              <span className="fc f2">
-                <Ic n="doc" />
-                {t.why[2][0]}
-              </span>
-              <span className="fc f3">
-                <Ic n="bell" />
-                {t.why[5][0]}
-              </span>
-            </div>
-          </div>
-        </section>
-
-        <section className="sec" id="about">
-          <div className="w about">
-            <div>
-              <h2 className="rv">{t.aboutT}</h2>
-              <p className="sub rv" style={{ "--i": 1 }}>
-                {t.aboutP}
-              </p>
-            </div>
-            <div className="hub rv in-hub" style={{ "--i": 1 }}>
-              <svg viewBox="0 0 100 100" aria-hidden="true">
-                {[
-                  [50, 8],
-                  [90, 37],
-                  [75, 84],
-                  [25, 84],
-                  [10, 37],
-                ].map(([x, y], i) => (
-                  <path
-                    key={i}
-                    d={`M50 50L${x} ${y}`}
-                    pathLength="100"
-                    style={{ transitionDelay: 300 + i * 120 + "ms" }}
-                  />
-                ))}
-              </svg>
-              <div className="core">
-                <i />
-              </div>
-              {t.domains.map((d, i) => (
-                <span
-                  key={i}
-                  className="node"
-                  style={{
-                    left: [50, 90, 75, 25, 10][i] + "%",
-                    top: [8, 37, 84, 84, 37][i] + "%",
-                    "--i": i,
-                  }}
-                >
-                  {d}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="sec tint" id="why">
-          <div className="w">
-            <h2 className="rv c">{t.whyT}</h2>
-            <div className="why">
-              {WHY_ORDER.map((idx, k) => {
-                const [h, p] = t.why[idx];
-                return (
-                  <article
-                    key={idx}
-                    className="wc rv"
-                    style={{ "--i": k, "--sp": WHY_SPAN[k] }}
-                  >
-                    <span className="ib">
-                      <Ic n={WHY_ICON[idx]} />
-                    </span>
-                    <h3>{h}</h3>
-                    {p && <p>{p}</p>}
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="sec" id="tools">
-          <div className="w">
-            <div className="hd2">
-              <h2 className="rv">{t.toolsT}</h2>
-              <p className="sub rv" style={{ "--i": 1 }}>
-                {t.toolsS}
-              </p>
-            </div>
-            <div className="rv" style={{ "--i": 2 }}>
-              <Tools t={t} />
-            </div>
-          </div>
-        </section>
-
-        <section className="sec tint" id="how">
-          <div className="w">
-            <How t={t} />
-          </div>
-        </section>
-
-        <section className="sec audience-section" id="audiences">
-          <div className="w">
-            <h2 className="rv c">{t.audienceT}</h2>
-            <div className="rv" style={{ "--i": 1 }}>
-              <UserTypeSelector t={t} />
-            </div>
-          </div>
-        </section>
-
-        <section className="sec tn" id="tenants">
-          <div className="w tnw">
-            <div>
-              <h2 className="rv">{t.tenT}</h2>
-              <p className="sub rv" style={{ "--i": 1 }}>
-                {t.tenS}
-              </p>
-            </div>
-            <div className="tenants-grid">
-              {t.ten.map(([h, p], i) => (
-                <article key={i} className="tc rv" style={{ "--i": i }}>
-                  <span className="ib">
-                    <Ic n={TEN_ICON[i]} />
-                  </span>
-                  <h3>{h}</h3>
-                  <p>{p}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="sec" id="app">
-          <div className="w appw">
-            <div>
-              <h2 className="rv">{t.appT}</h2>
-              <p className="sub rv" style={{ "--i": 1 }}>
-                {t.appS}
-              </p>
-              <ul className="al">
-                {t.app.map((x, i) => (
-                  <li key={i} className="rv" style={{ "--i": i + 2 }}>
-                    <span>
-                      <Ic n="check" />
-                    </span>
-                    {x}
-                  </li>
-                ))}
-              </ul>
-              <div className="stores rv" style={{ "--i": 7 }}>
-                <Store href={LINKS.appStore} label={t.stores[0]} />
-                <Store href={LINKS.googlePlay} label={t.stores[1]} />
-              </div>
-            </div>
-            <div className="rv" style={{ "--i": 2 }}>
-              <PhoneDemo t={t} />
-            </div>
-          </div>
-        </section>
-
-        <section className="sec tint" id="pricing">
-          <div className="w">
-            <h2 className="rv c">{t.priceT}</h2>
-            <div className="pcs">
-              {t.price.map(([tag, big, per, sub, note, incl], i) => (
-                <article
-                  key={i}
-                  className={"pc rv" + (i === 1 ? " hot" : "")}
-                  style={{ "--i": i }}
-                >
-                  <small>{tag}</small>
-                  <b>{big}</b>
-                  {per && <span className="per">{per}</span>}
-                  {sub && <h3>{sub}</h3>}
-                  {note && <p>{note}</p>}
-                  {incl.length > 0 && (
-                    <ul>
-                      {incl.map((x) => (
-                        <li key={x}>
-                          <Ic n="check" />
-                          {x}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="sec" id="contact">
-          <div className="w">
-            <div className="ban rv">
-              <div>
-                <h2>{t.agentsT}</h2>
-                <p>{t.agentsP}</p>
-              </div>
-              <a className="btn wh" href={TEL}>
-                <Ic n="phone" />
-                {PHONE}
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="ft">
-        <div className="w">
-          <Logo />
-          <nav>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <a key={i} href={"#" + ANCHORS[i]}>
-                {t.rooms[i]}
-              </a>
-            ))}
-            <a href="#audiences">{t.audienceNav}</a>
-          </nav>
-          <small>© Arendnik</small>
-        </div>
-      </footer>
-    </>
+    <AudienceExperience
+      lang={lang}
+      role={role}
+      onChoose={chooseRole}
+      onLanguageChange={setLang}
+    />
   );
 }
+

@@ -2525,18 +2525,584 @@ h1 {
     background: var(--blue);
 }
 
-.welcome-content {
-    position: relative;
-    width: min(1110px, 88%);
-    margin: 0 auto;
-    padding: clamp(60px, 10vh, 112px) 0 30px;
+/* ════════════════════════════════════════════════════════
+   FULLSCREEN SPLIT-SCREEN OPENING EXPERIENCE
+════════════════════════════════════════════════════════ */
+.welcome-screen-fullscreen {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    color: var(--ink);
+    overflow: hidden;
+    user-select: none;
+    z-index: 100;
 }
 
-.welcome-intro {
-    max-width: 740px;
-    margin-bottom: clamp(44px, 7vh, 76px);
-    animation: experience-rise .65s .1s both;
+/* ── Topbar ── */
+.ws-topbar {
+    flex: none;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(20px, 3.5vw, 48px);
+    border-bottom: 1px solid var(--line);
+    background: #FFFFFF;
+    z-index: 10;
 }
+
+.ws-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.ws-logo img {
+    height: 30px;
+    width: auto;
+    display: block;
+}
+
+.ws-topbar-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--mute);
+    text-transform: uppercase;
+}
+
+.ws-kicker-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 10px rgba(30, 59, 179, 0.5);
+    animation: pulse 2.2s infinite;
+}
+
+.ws-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ws-login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 16px;
+    height: 34px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--blue);
+    background: var(--tint2);
+    border: 1px solid rgba(30, 59, 179, 0.15);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.ws-login-btn:hover {
+    background: var(--blue);
+    color: #FFFFFF;
+    border-color: var(--blue);
+}
+
+/* ── Split Screen Panels Container ── */
+.ws-split-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: calc(100% - 64px - 44px);
+    overflow: hidden;
+    position: relative;
+    background: #F8FAFC;
+    transition: grid-template-columns 0.45s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+/* Sophisticated expand/contract grid ratios on hover */
+.ws-split-container.hovered-panel-0 {
+    grid-template-columns: 1.4fr 0.8fr 0.8fr;
+}
+.ws-split-container.hovered-panel-1 {
+    grid-template-columns: 0.8fr 1.4fr 0.8fr;
+}
+.ws-split-container.hovered-panel-2 {
+    grid-template-columns: 0.8fr 0.8fr 1.4fr;
+}
+
+/* ── Individual Split Panel ── */
+.ws-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(24px, 3.2vw, 48px) clamp(20px, 2.8vw, 42px);
+    border-right: 1px solid var(--line);
+    background: #FFFFFF;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    transition: background 0.35s ease, opacity 0.35s ease, border-color 0.35s ease;
+}
+
+.ws-panel:last-child {
+    border-right: none;
+}
+
+/* Subtle background illumination glow & subtle grid on hover */
+.ws-panel-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    z-index: 1;
+}
+
+.ws-panel-glow {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30, 59, 179, 0.08) 0%, transparent 68%);
+}
+
+.ws-panel-1 .ws-panel-glow {
+    background: radial-gradient(circle, rgba(23, 91, 78, 0.08) 0%, transparent 68%);
+}
+
+.ws-panel-2 .ws-panel-glow {
+    background: radial-gradient(circle, rgba(139, 103, 48, 0.08) 0%, transparent 68%);
+}
+
+.ws-panel-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(30, 59, 179, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 59, 179, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+/* States: Expanded & Dimmed */
+.ws-panel.is-expanded {
+    background: #FFFFFF;
+    z-index: 2;
+}
+
+.ws-panel.is-expanded .ws-panel-bg {
+    opacity: 1;
+}
+
+.ws-panel.is-dimmed {
+    opacity: 0.65;
+    background: #FAFCFE;
+}
+
+.ws-panel:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--blue);
+}
+
+/* Top Header in Panel */
+.ws-panel-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ws-panel-num {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #929BB9;
+    transition: color 0.3s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-num {
+    color: var(--blue);
+}
+
+.ws-panel-badge {
+    padding: 4px 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 99px;
+    background: var(--tint);
+    color: var(--mute);
+    border: 1px solid var(--line);
+    transition: all 0.3s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-badge {
+    background: var(--tint2);
+    color: var(--blue);
+    border-color: rgba(30, 59, 179, 0.2);
+}
+
+.ws-panel-icon-wrap {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--tint);
+    color: var(--mute);
+    border: 1px solid var(--line);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+.ws-panel-icon-wrap .ic {
+    width: 22px;
+    height: 22px;
+}
+
+.ws-panel.is-expanded .ws-panel-icon-wrap {
+    background: var(--blue);
+    color: #FFFFFF;
+    border-color: var(--blue);
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 8px 24px -6px rgba(30, 59, 179, 0.45);
+}
+
+/* Panel Body / Main */
+.ws-panel-main {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto 0;
+    padding: 16px 0;
+}
+
+.ws-panel-audience-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mute);
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-audience-tag {
+    color: var(--blue);
+}
+
+.ws-panel-title {
+    font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--navy);
+    margin-bottom: 12px;
+    transition: color 0.3s ease, transform 0.35s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-title {
+    transform: translateY(-2px);
+    color: var(--blue);
+}
+
+.ws-panel-desc {
+    font-size: clamp(0.85rem, 1.05vw, 0.98rem);
+    line-height: 1.55;
+    color: var(--mute);
+    max-width: 36ch;
+    margin-bottom: 24px;
+}
+
+/* Features List inside Panel */
+.ws-panel-features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+    transition: transform 0.35s ease;
+}
+
+.ws-feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: clamp(0.75rem, 0.92vw, 0.85rem);
+    font-weight: 600;
+    color: #3B4468;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ws-feature-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #B6C0DE;
+    flex: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.ws-panel.is-expanded .ws-feature-bullet {
+    background: var(--blue);
+    transform: scale(1.4);
+}
+
+/* Micro metrics */
+.ws-panel-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 12px 14px;
+    background: #F4F7FC;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    transition: all 0.35s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-metrics {
+    background: #EDF3FE;
+    border-color: rgba(30, 59, 179, 0.22);
+}
+
+.ws-metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ws-metric-val {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+}
+
+.ws-panel.is-expanded .ws-metric-val {
+    color: var(--blue);
+}
+
+.ws-metric-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--mute);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Panel Footer & CTA Button */
+.ws-panel-footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.ws-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: var(--tint);
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+.ws-cta-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.ws-cta-arrow .ic {
+    width: 15px;
+    height: 15px;
+}
+
+.ws-panel.is-expanded .ws-cta-button {
+    background: var(--blue);
+    color: #FFFFFF;
+    border-color: var(--blue);
+    box-shadow: 0 8px 22px -6px rgba(30, 59, 179, 0.55);
+}
+
+.ws-panel.is-expanded .ws-cta-arrow {
+    transform: translateX(4px);
+}
+
+.ws-panel-hint {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #9AA3C0;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.3s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-hint {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Bottom edge accent bar */
+.ws-panel-active-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s ease;
+}
+
+.ws-panel.is-expanded .ws-panel-active-bar {
+    transform: scaleX(1);
+}
+
+/* ── Bottombar ── */
+.ws-bottombar {
+    flex: none;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(20px, 3.5vw, 48px);
+    border-top: 1px solid var(--line);
+    background: #FFFFFF;
+    font-size: 0.75rem;
+    color: var(--mute);
+    z-index: 10;
+}
+
+.ws-bottombar-left,
+.ws-bottombar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ws-brand-mark {
+    font-weight: 800;
+    color: var(--blue);
+    letter-spacing: 0.02em;
+}
+
+.ws-brand-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #CBD2E6;
+}
+
+.ws-tagline-text {
+    font-weight: 500;
+}
+
+/* ── Responsive handling for smaller screens ── */
+@media (max-width: 1024px) {
+    .ws-split-container {
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+    .ws-feature-pill {
+        white-space: normal;
+    }
+    .ws-panel-metrics {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    .ws-panel-hint {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-screen-fullscreen {
+        position: relative;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+    .ws-topbar-center {
+        display: none;
+    }
+    .ws-split-container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+    .ws-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+        padding: 28px 20px;
+    }
+    .ws-panel-metrics {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .ws-bottombar {
+        flex-direction: column;
+        height: auto;
+        padding: 16px 20px;
+        gap: 8px;
+    }
+}
+
+
+/* ── PERSONA (now uses main platform styles) ── */
+.persona-page {
+    animation: experience-enter .5s ease both;
+}
+
+.persona-full-hd .w {
+    width: min(1320px, 96%);
+    gap: .8rem;
+}
+
+/* persona hero reuses .hero section but with role-specific eyebrow */
+.persona-page .hero {
+    position: relative;
+    overflow: hidden;
+    padding: calc(68px + clamp(36px, 6vw, 88px)) 0 clamp(56px, 8vw, 110px);
+    background: linear-gradient(180deg, var(--tint), #fff 75%);
+}
+
+.persona-page .hero::before {
+    content: \"\";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(30, 59, 179, .16) 1.2px, transparent 1.5px);
+    background-size: 26px 26px;
+    -webkit-mask-image: linear-gradient(180deg, #000, transparent 70%);
+    mask-image: linear-gradient(180deg, #000, transparent 70%);
+}
+
 
 .experience-eyebrow {
     display: inline-flex;
@@ -2804,7 +3370,7 @@ h1 {
     width: min(1320px, 90%);
     min-height: 610px;
     display: grid;
-    grid-template-columns: minmax(0, .85fr) minmax(490px, 1.15fr);
+    grid-template-columns: 2fr;
     align-items: center;
     gap: clamp(38px, 7vw, 100px);
     margin: 0 auto;
@@ -3755,7 +4321,7 @@ h1 {
     .persona-nav { gap: 14px; }
     .persona-nav a,
     .persona-nav button { font-size: .72rem; }
-    .persona-hero { grid-template-columns: minmax(0, .9fr) minmax(390px, 1.1fr); gap: 35px; }
+    .persona-hero { grid-template-columns: 1fr; gap: 35px; }
     .product-float { right: -4%; }
     .experience-feature { padding-inline: 16px; }
     .experience-pricing { grid-template-columns: 1fr minmax(230px, .72fr); }
@@ -3767,7 +4333,7 @@ h1 {
     .persona-header { flex-wrap: wrap; padding: 12px 0; }
     .persona-nav { order: 3; width: 100%; justify-content: center; padding: 8px 0 2px; border-top: 1px solid var(--line); }
     .persona-header-actions { margin-left: auto; }
-    .persona-hero { min-height: initial; grid-template-columns: 1fr; gap: 45px; padding: 65px 0 75px; }
+    .persona-hero { min-height: initial; gap: 45px; padding: 65px 0 75px; }
     .persona-hero-copy { max-width: 690px; }
     .persona-hero-copy h1 { max-width: 16ch; }
     .persona-hero-visual { width: min(100%, 670px); min-height: 425px; justify-self: center; }
@@ -3786,6 +4352,33 @@ h1 {
     .welcome-intro { margin-bottom: 38px; }
     .welcome-intro h1 { font-size: clamp(2.35rem, 11vw, 3.35rem); }
     .welcome-intro p { font-size: .92rem; }
+    .wp-paths { grid-template-columns: 1fr; }
+    .wp-path,
+    .wp-path:first-child {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 52px 1fr auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+        column-gap: 16px;
+        padding: 20px 16px;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .wp-path-header { grid-row: span 2; width: auto; margin: 0; }
+    .wp-path-num { display: none; }
+    .wp-path-body { grid-column: 2; align-self: center; gap: 4px; }
+    .wp-path-name { font-size: 1.05rem; }
+    .wp-path-desc { font-size: .76rem; max-width: 100%; }
+    .wp-path-cta {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+        width: auto;
+    }
+    .wp-path-cta-text { display: none; }
     .role-picker-grid { grid-template-columns: 1fr; }
     .role-choice,
     .role-choice:first-child {
