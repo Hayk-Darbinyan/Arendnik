@@ -2620,7 +2620,7 @@ h1 {
 .ws-split-container {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     height: calc(100% - 64px - 44px);
     overflow: hidden;
     position: relative;
@@ -2630,13 +2630,10 @@ h1 {
 
 /* Sophisticated expand/contract grid ratios on hover */
 .ws-split-container.hovered-panel-0 {
-    grid-template-columns: 1.4fr 0.8fr 0.8fr;
+    grid-template-columns: 1.4fr 0.8fr;
 }
 .ws-split-container.hovered-panel-1 {
-    grid-template-columns: 0.8fr 1.4fr 0.8fr;
-}
-.ws-split-container.hovered-panel-2 {
-    grid-template-columns: 0.8fr 0.8fr 1.4fr;
+    grid-template-columns: 0.8fr 1.4fr;
 }
 
 /* ── Individual Split Panel ── */
@@ -3029,7 +3026,7 @@ h1 {
 /* ── Responsive handling for smaller screens ── */
 @media (max-width: 1024px) {
     .ws-split-container {
-        grid-template-columns: 1fr 1fr 1fr !important;
+        grid-template-columns: 1fr 1fr !important;
     }
     .ws-feature-pill {
         white-space: normal;
@@ -3563,7 +3560,7 @@ h1 {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    color: #2b3452;
+    color: var(--blue);
     font-size: .67rem;
     font-weight: 750;
 }
@@ -4253,7 +4250,8 @@ h1 {
 }
 
 .experience-cta .experience-eyebrow,
-.experience-cta .experience-eyebrow i { color: #d8e1ff; }
+.experience-cta .experience-eyebrow i { color: var(--blue); }
+.experience-cta .experience-eyebrow { padding: 4px 8px; border-radius: 4px; background: #fff; }
 .experience-cta h2 { max-width: 17ch; margin: 13px 0 8px; }
 .experience-cta p { color: rgba(255,255,255,.76); }
 

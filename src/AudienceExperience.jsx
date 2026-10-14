@@ -207,7 +207,7 @@ function LanguageControl({ lang, onLanguageChange }) {
 function Welcome({ lang, onChoose, onLanguageChange }) {
   const t = copy[lang];
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const roleIcons = ["building", "briefcase", "home"];
+  const roleIcons = ["building", "briefcase"];
 
   // Highlights or preview badges for each role panel to make them feel rich and product-focused
   const roleHighlights = [
@@ -236,19 +236,6 @@ function Welcome({ lang, onChoose, onLanguageChange }) {
         : lang === "ru"
         ? ["Единый реестр всех объектов", "Цифровые договоры аренды", "Автоматические финансовые отчеты"]
         : ["Unified multi-property overview", "Digital lease contracts & signing", "Automated revenue & payment tracking"],
-    },
-    {
-      badge: lang === "hy" ? "Վարձակալի տարածք" : lang === "ru" ? "Кабинет жильца" : "Tenant Space",
-      metrics: [
-        { label: lang === "hy" ? "Վարձավճար" : lang === "ru" ? "Оплата" : "Rent", val: "1-Click" },
-        { label: lang === "hy" ? "Հայտեր" : lang === "ru" ? "Заявки" : "Issues", val: "+Photo" },
-        { label: lang === "hy" ? "Չատ" : lang === "ru" ? "Чат" : "Chat", val: "Direct" },
-      ],
-      features: lang === "hy"
-        ? ["Վարձավճարի արագ առցանց վճարում", "Հայտի ուղարկում լուսանկարով", "Անմիջական կապ կառավարչի հետ"]
-        : lang === "ru"
-        ? ["Быстрая онлайн-оплата аренды", "Отправка заявок с фотографиями", "Прямая связь с управляющим"]
-        : ["Fast one-touch rent payments", "Photo maintenance issue reporting", "Direct messenger with landlord"],
     },
   ];
 
@@ -402,7 +389,6 @@ function ProductWindow({ role, index }) {
           <div className="product-title-row"><div><span>{role.visualNote}</span><b>{role.visualTitle}</b></div><i>•••</i></div>
           {index === 0 && <div className="product-metrics">{role.visualLabels.map((label, i) => <div className="product-metric" key={label}><span>{label}</span><b className={`metric-mark metric-mark-${i}`} /></div>)}</div>}
           {index === 1 && <div className="portfolio-preview"><div className="portfolio-image" style={{ backgroundImage: `url(${images[1]})` }} /><div><b>{role.mock[1]}</b><span>{role.mock[2]}</span><i>{role.mock[3]}</i></div></div>}
-          {index === 2 && <div className="tenant-payment"><div className="tenant-payment-icon">✓</div><span>{role.mock[1]}</span><b>{role.mock[2]}</b><i>{role.mock[3]}</i></div>}
           <div className="product-rows">
             {role.mock.slice(4, 7).map((label, i) => (
               <div className="product-row" key={label}>
@@ -577,7 +563,7 @@ function Store({ href, label }) {
 const WHY_ICON = ["pay", "trend", "doc", "tool", "chat", "bell", "chart"];
 const WHY_ORDER = [0, 1, 3, 2, 4, 5, 6], WHY_SPAN = [1, 1, 1, 2, 1, 2, 1];
 const TEN_ICON = ["chat", "camera", "pay", "bell"];
-const ANCHORS = ["", "about", "why", "tools", "how", "tenants", "app", "pricing", "contact"];
+const ANCHORS = ["", "about", "why", "tools", "how", "tenants", "app", "pricing"];
 
 function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
   const t = copy[lang];
@@ -659,7 +645,7 @@ function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
           </button>
         </div>
         <div className={"mnav" + (open ? " open" : "")}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+          {[1, 2, 3, 4, 5, 6, 7].map(i => (
             <a key={i} href={"#" + ANCHORS[i]} onClick={() => setOpen(false)}>{source.rooms[i]}</a>
           ))}
           <button className="platform-back" type="button" onClick={() => { onChoose(undefined); setOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
@@ -784,7 +770,7 @@ function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
             {role.features.map(([title, text], i) => (
               <article className="experience-feature" key={title}>
                 <span className="feature-number">0{i + 1}</span>
-                <span className="feature-symbol">{symbols[(i + index) % symbols.length]}</span>
+                <span className="feature-symbol"><Ic n={role.featureIcons[i]} /></span>
                 <h3>{title}</h3>
                 <p>{text}</p>
                 <span className="feature-rule" />
@@ -893,28 +879,13 @@ function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
           </a>
         </section>
 
-        {/* ── CONTACT BANNER ── */}
-        <section className="sec" id="contact">
-          <div className="w">
-            <div className="ban rv">
-              <div>
-                <h2>{source.agentsT}</h2>
-                <p>{source.agentsP}</p>
-              </div>
-              <a className="btn wh" href={TEL}>
-                <Ic n="phone" />
-                {phone}
-              </a>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="ft">
         <div className="w">
           <a href="#top" className="logo"><img src={logo} alt="Arendnik" /></a>
           <nav>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+            {[1, 2, 3, 4, 5, 6, 7].map(i => (
               <a key={i} href={"#" + ANCHORS[i]}>{source.rooms[i]}</a>
             ))}
           </nav>

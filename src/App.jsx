@@ -21,7 +21,6 @@ const ANCHORS = [
   "tenants",
   "app",
   "pricing",
-  "contact",
 ];
 const WHY_ICON = ["pay", "trend", "doc", "tool", "chat", "bell", "chart"];
 const TOOL_ICON = ["chat", "bell", "tool", "doc", "link", "pay", "chart"];
@@ -442,7 +441,7 @@ function UserTypeSelector({ t }) {
       </div>
       <article className="audience-panel" key={selected} aria-live="polite">
         <div className="audience-copy">
-          <span className="audience-kicker">0{selected + 1} / 03</span>
+          <span className="audience-kicker">0{selected + 1} / 02</span>
           <h3>{audience.title}</h3>
           <p>{audience.description}</p>
         </div>
@@ -581,7 +580,7 @@ export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem("lang") || "en");
   const location = useLocation();
   const navigate = useNavigate();
-  const rolePaths = ["/community", "/broker", "/tenant"];
+  const rolePaths = ["/community", "/landlord"];
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
   useEffect(() => {
@@ -590,10 +589,13 @@ export default function App() {
   }, [lang]);
 
   // Redirect legacy /platform/* routes
-  const platformMatch = pathname.match(/^\/platform\/(community|broker|tenant)$/);
+  const platformMatch = pathname.match(/^\/platform\/(community|broker|landlord|tenant)$/);
   if (platformMatch) {
-    return <Navigate to={"/" + platformMatch[1]} replace />;
+    const audiencePath = platformMatch[1] === "community" ? "/community" : platformMatch[1] === "tenant" ? "/" : "/landlord";
+    return <Navigate to={audiencePath} replace />;
   }
+
+  if (pathname === "/broker") return <Navigate to="/landlord" replace />;
 
   const routeRole = rolePaths.indexOf(pathname);
   const role = pathname === "/" ? null : routeRole;
