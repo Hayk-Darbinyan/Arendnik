@@ -13,7 +13,6 @@ const copy = {
     contact: "Contact",
     back: "All audiences",
     returnLabel: "Back",
-    workflowLabel: "ARENDNIK WORKFLOW",
     roles: [
       {
         name: "Property community",
@@ -35,8 +34,6 @@ const copy = {
           ["Tasks and notifications", "Organize operational follow-ups and keep people informed."],
         ],
         featureIcons: ["building", "pay", "tool", "bell"],
-        workflowTitle: "From incoming request to clear next step.",
-        workflow: ["A resident sends a request", "The team reviews and organizes the work", "Progress and communication stay together"],
         mobileTitle: "Stay close to building operations.",
         mobileCopy: "Check updates, requests, payments, and tasks from your phone, wherever the day takes you.",
         mobileItems: ["Resident communication", "Maintenance requests", "Payments and tasks"],
@@ -64,8 +61,6 @@ const copy = {
           ["Tasks and reminders", "Keep daily follow-ups and important notifications in view."],
         ],
         featureIcons: ["home", "doc", "pay", "bell"],
-        workflowTitle: "One repeatable rhythm for rental operations.",
-        workflow: ["Organize properties and tenant details", "Record agreements, calculations, and payments", "Track requests, messages, and next actions"],
         mobileTitle: "Manage the day between appointments.",
         mobileCopy: "Use mobile access to check property activity, follow requests, and stay in touch with tenants.",
         mobileItems: ["Property and tenant details", "Payment tracking", "Requests and communication"],
@@ -89,7 +84,6 @@ const copy = {
     contact: "Կապ",
     back: "Բոլոր լսարանները",
     returnLabel: "Վերադառնալ",
-    workflowLabel: "ԱՇԽԱՏԱՆՔԱՅԻՆ ԳՈՐԾԸՆԹԱՑ",
     roles: [
       {
         name: "Համատիրություն",
@@ -111,8 +105,6 @@ const copy = {
           ["Առաջադրանքներ և ծանուցումներ", "Կազմակերպեք ընթացիկ աշխատանքներն ու տեղեկացրեք բնակիչներին։"],
         ],
         featureIcons: ["building", "pay", "tool", "bell"],
-        workflowTitle: "Դիմումից մինչև հստակ հաջորդ քայլ։",
-        workflow: ["Բնակիչն ուղարկում է հայտ", "Թիմը դիտարկում և կազմակերպում է աշխատանքը", "Ընթացքն ու հաղորդակցությունը մնում են միասին"],
         mobileTitle: "Մնացեք շենքի աշխատանքների ընթացքին մոտ։",
         mobileCopy: "Հեռախոսից ստուգեք թարմացումները, հայտերը, վճարումները և առաջադրանքները։",
         mobileItems: ["Կապ բնակիչների հետ", "Սպասարկման հայտեր", "Վճարումներ և առաջադրանքներ"],
@@ -140,8 +132,6 @@ const copy = {
           ["Առաջադրանքներ և հիշեցումներ", "Պահեք առօրյա քայլերն ու կարևոր ծանուցումները տեսադաշտում։"],
         ],
         featureIcons: ["home", "doc", "pay", "bell"],
-        workflowTitle: "Վարձակալության գործընթացների մեկ աշխատանքային ռիթմ։",
-        workflow: ["Կազմակերպեք գույքերն ու վարձակալների տվյալները", "Գրանցեք պայմանագրերը, հաշվարկներն ու վճարումները", "Հետևեք հայտերին, հաղորդագրություններին և հաջորդ քայլերին"],
         mobileTitle: "Կառավարեք աշխատանքը հանդիպումների արանքում։",
         mobileCopy: "Հեռախոսից ստուգեք գույքի ընթացքը, հետևեք հայտերին և կապ պահպանեք վարձակալների հետ։",
         mobileItems: ["Գույքի և վարձակալի տվյալներ", "Վճարումների վերահսկում", "Հայտեր և հաղորդակցություն"],
@@ -165,7 +155,6 @@ const copy = {
     contact: "Контакты",
     back: "Все аудитории",
     returnLabel: "Назад",
-    workflowLabel: "РАБОЧИЙ ПРОЦЕСС ARENDNIK",
     roles: [
       {
         name: "Товарищество собственников",
@@ -187,8 +176,6 @@ const copy = {
           ["Задачи и уведомления", "Организуйте текущие дела и информируйте жильцов."],
         ],
         featureIcons: ["building", "pay", "tool", "bell"],
-        workflowTitle: "От обращения до понятного следующего шага.",
-        workflow: ["Жилец отправляет заявку", "Команда рассматривает и организует работу", "Ход работы и общение остаются вместе"],
         mobileTitle: "Будьте в курсе дел здания.",
         mobileCopy: "Проверяйте обновления, заявки, платежи и задачи с телефона, где бы вы ни находились.",
         mobileItems: ["Общение с жильцами", "Заявки на обслуживание", "Платежи и задачи"],
@@ -216,8 +203,6 @@ const copy = {
           ["Задачи и напоминания", "Держите текущие дела и важные уведомления в поле зрения."],
         ],
         featureIcons: ["home", "doc", "pay", "bell"],
-        workflowTitle: "Единый ритм для процессов аренды.",
-        workflow: ["Организуйте объекты и данные арендаторов", "Фиксируйте договоры, расчёты и платежи", "Следите за заявками, сообщениями и дальнейшими действиями"],
         mobileTitle: "Управляйте делами между встречами.",
         mobileCopy: "Проверяйте активность объектов, заявки и общение с арендаторами с телефона.",
         mobileItems: ["Данные об объектах и арендаторах", "Контроль платежей", "Заявки и общение"],
