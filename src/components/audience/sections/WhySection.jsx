@@ -1,7 +1,7 @@
 import { Ic } from "../shared/Icons.jsx";
 
 const WHY_ICON = ["pay", "trend", "doc", "tool", "chat", "bell", "chart"];
-const WHY_ORDER = [0, 1, 3, 2, 4, 5, 6];
+const WHY_ORDER = [0, 1, 3, 2, 4, 5];
 const WHY_SPAN = [1, 1, 1, 2, 1, 2, 1];
 
 export function WhySection({ source }) {
