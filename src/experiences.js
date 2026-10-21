@@ -1,7 +1,7 @@
 const copy = {
   en: {
-    welcomeKicker: "A clearer way to manage property",
-    welcomeTitle: "Your Arendnik experience starts here.",
+    welcomeKicker: "Arendnik` A clearer way to manage property",
+    welcomeTitle: "Arendnik` A clearer way to manage property",
     welcomeCopy: "Choose the role that best describes you. We’ll show you the tools and workflows that matter to your day.",
     welcomeFooterPlace: "Armenia",
     welcomeFooterLine: "Property, made clearer",
@@ -71,8 +71,8 @@ const copy = {
     ],
   },
   hy: {
-    welcomeKicker: "Գույքի կառավարման ավելի հստակ ձև",
-    welcomeTitle: "Ձեր Arendnik փորձառությունը սկսվում է այստեղ։",
+    welcomeKicker: "Arendnik` Ձեր գույքի կառավարման հստակ ձևը",
+    welcomeTitle: "Arendnik` Ձեր գույքի կառավարման հստակ ձևը",
     welcomeCopy: "Ընտրեք ձեզ համապատասխանող դերը, և կտեսնեք ձեր առօրյա աշխատանքի համար կարևոր գործիքներն ու գործընթացները։",
     welcomeFooterPlace: "Հայաստան",
     welcomeFooterLine: "Գույքի կառավարումը՝ ավելի հստակ",
@@ -142,8 +142,8 @@ const copy = {
     ],
   },
   ru: {
-    welcomeKicker: "Понятное управление недвижимостью",
-    welcomeTitle: "Ваш опыт работы с Arendnik начинается здесь.",
+    welcomeKicker: "Arendnik` Понятное управление недвижимостью",
+    welcomeTitle: "Arendnik` Понятное управление недвижимостью",
     welcomeCopy: "Выберите подходящую роль. Мы покажем инструменты и процессы, важные для вашей повседневной работы.",
     welcomeFooterPlace: "Армения",
     welcomeFooterLine: "Понятное управление недвижимостью",

@@ -1,140 +1,108 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import logo from "../../assets/arendnik.png";
 import copy from "../../experiences.js";
 import { Ic } from "./shared/Icons.jsx";
 import { LanguageControl } from "./shared/LanguageControl.jsx";
+import "./welcome.css";
 
 /* ════════════════════════════════════════════════════════
-   PARTICLE FIELD — brand-blue network that reacts to cursor
+   ILLUSTRATED SCENES — little neighbourhoods whose windows
+   light up warmly when a card is hovered / focused.
 ════════════════════════════════════════════════════════ */
-function ParticleField({ pointerRef }) {
-  const canvasRef = useRef(null);
+function Windows({ x, y, cols, rows, w = 14, h = 18, gap = 10, lit = [] }) {
+  const items = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const i = r * cols + c;
+      items.push(
+        <rect
+          key={`${x}-${y}-${i}`}
+          className={`wm-win ${lit.includes(i) ? "is-on" : ""}`}
+          style={{ "--w": `${(i % 5) * 70}ms` }}
+          x={x + c * (w + gap)}
+          y={y + r * (h + gap)}
+          width={w}
+          height={h}
+          rx="3"
+        />
+      );
+    }
+  }
+  return <>{items}</>;
+}
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return undefined;
-    const ctx = canvas.getContext("2d");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let w = 0;
-    let h = 0;
-    let raf = 0;
-    let parts = [];
+function Scene({ variant }) {
+  return (
+    <svg className="wm-scene" viewBox="0 0 400 230" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id={`sky-${variant}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" className="wm-sky-top" />
+          <stop offset="1" className="wm-sky-bottom" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="230" fill={`url(#sky-${variant})`} />
+      <circle className="wm-sun" cx={variant === 0 ? 318 : 82} cy="62" r="30" />
+      <path d="M0 170 Q100 130 200 165 T400 150 V230 H0Z" className="wm-hill-back" />
 
-    const resize = () => {
-      const r = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = r.width;
-      h = r.height;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(90, Math.max(28, (w * h) / 22000)));
-      parts = Array.from({ length: n }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.28,
-        vy: (Math.random() - 0.5) * 0.28,
-        r: Math.random() * 1.6 + 0.9,
-      }));
-    };
+      {variant === 0 ? (
+        <g>
+          {/* side buildings */}
+          <rect x="52" y="112" width="74" height="98" rx="6" className="wm-bld-soft" />
+          <Windows x={66} y={126} cols={2} rows={3} w={12} h={14} gap={10} lit={[1, 4]} />
+          <rect x="282" y="96" width="76" height="114" rx="6" className="wm-bld-soft" />
+          <Windows x={296} y={110} cols={2} rows={3} w={12} h={14} gap={12} lit={[2]} />
+          {/* main building */}
+          <rect x="140" y="44" width="120" height="166" rx="8" className="wm-bld-main" />
+          <rect x="132" y="38" width="136" height="12" rx="4" className="wm-bld-roof" />
+          <Windows x={156} y={64} cols={3} rows={4} lit={[1, 5, 6, 10]} />
+          <path d="M186 210 V184 a14 14 0 0 1 28 0 V210Z" className="wm-door" />
+        </g>
+      ) : (
+        <g>
+          {/* three homes */}
+          <g>
+            <rect x="48" y="128" width="90" height="82" className="wm-bld-main" />
+            <path d="M40 130 L93 88 L146 130Z" className="wm-bld-roof" />
+            <Windows x={62} y={146} cols={2} rows={1} w={16} h={20} gap={16} lit={[0]} />
+            <rect x="96" y="176" width="22" height="34" rx="3" className="wm-door" />
+          </g>
+          <g>
+            <rect x="158" y="96" width="92" height="114" className="wm-bld-main" />
+            <path d="M150 98 L204 52 L258 98Z" className="wm-bld-roof" />
+            <Windows x={174} y={116} cols={2} rows={2} w={16} h={18} gap={20} lit={[1, 2]} />
+            <rect x="193" y="176" width="22" height="34" rx="3" className="wm-door" />
+          </g>
+          <g>
+            <rect x="268" y="138" width="86" height="72" className="wm-bld-soft" />
+            <path d="M260 140 L311 102 L362 140Z" className="wm-bld-roof" />
+            <Windows x={282} y={154} cols={2} rows={1} w={16} h={18} gap={16} lit={[1]} />
+            <rect x="326" y="180" width="20" height="30" rx="3" className="wm-door" />
+          </g>
+        </g>
+      )}
 
-    const LINK = 130;
-    const REACH = 190;
-    const PUSH = 120;
-
-    const frame = () => {
-      ctx.clearRect(0, 0, w, h);
-      const m = pointerRef.current;
-
-      for (let i = 0; i < parts.length; i++) {
-        const p = parts[i];
-
-        if (!reduce) {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < -10) p.x = w + 10;
-          if (p.x > w + 10) p.x = -10;
-          if (p.y < -10) p.y = h + 10;
-          if (p.y > h + 10) p.y = -10;
-
-          if (m) {
-            const dx = p.x - m.x;
-            const dy = p.y - m.y;
-            const d = Math.hypot(dx, dy);
-            if (d < PUSH && d > 0.01) {
-              const f = (1 - d / PUSH) * 1.6;
-              p.x += (dx / d) * f;
-              p.y += (dy / d) * f;
-            }
-          }
-        }
-
-        for (let j = i + 1; j < parts.length; j++) {
-          const q = parts[j];
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < LINK) {
-            ctx.strokeStyle = `rgba(30,59,179,${(1 - d / LINK) * 0.2})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.stroke();
-          }
-        }
-
-        if (m) {
-          const d = Math.hypot(p.x - m.x, p.y - m.y);
-          if (d < REACH) {
-            ctx.strokeStyle = `rgba(30,59,179,${(1 - d / REACH) * 0.5})`;
-            ctx.lineWidth = 1.2;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(m.x, m.y);
-            ctx.stroke();
-          }
-        }
-
-        ctx.fillStyle = "rgba(30,59,179,.55)";
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      if (!reduce) raf = requestAnimationFrame(frame);
-    };
-
-    resize();
-    frame();
-    window.addEventListener("resize", resize);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, [pointerRef]);
-
-  return <canvas ref={canvasRef} className="ws-particles" aria-hidden="true" />;
+      {/* trees + ground */}
+      <circle cx="30" cy="188" r="20" className="wm-tree" />
+      <rect x="28" y="196" width="4" height="16" className="wm-trunk" />
+      <circle cx="372" cy="192" r="16" className="wm-tree" />
+      <rect x="370" y="198" width="4" height="14" className="wm-trunk" />
+      <rect x="0" y="208" width="400" height="22" className="wm-ground" />
+    </svg>
+  );
 }
 
 /* ════════════════════════════════════════════════════════
-   WELCOME SCREEN — Fullscreen Split-Screen Panels
-   Audience selection page
+   WELCOME SCREEN — audience selection
 ════════════════════════════════════════════════════════ */
 export function Welcome({ lang, onChoose, onLanguageChange }) {
   const t = copy[lang];
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const rootRef = useRef(null);
-  const pointerRef = useRef(null);
-  const rafRef = useRef(0);
+  const [active, setActive] = useState(null);
   const roleIcons = ["building", "briefcase"];
+  const tr = (hy, ru, en) => (lang === "hy" ? hy : lang === "ru" ? ru : en);
 
-  const roleHighlights = [
+  const highlights = [
     {
-      badge: lang === "hy" ? "Շենքի կառավարում" : lang === "ru" ? "Управление зданием" : "Building Ops",
-      metrics: [
-        { label: lang === "hy" ? "Բնակիչներ" : lang === "ru" ? "Жильцы" : "Residents", val: "100%" },
-        { label: lang === "hy" ? "Վճարումներ" : lang === "ru" ? "Платежи" : "Payments", val: "Online" },
-        { label: lang === "hy" ? "Սպասարկում" : lang === "ru" ? "Заявки" : "Tickets", val: "24/7" },
-      ],
+      badge: tr("Շենքի կառավարում", "Управление зданием", "For buildings"),
       features: lang === "hy"
         ? ["Բնակիչների կապ և համայնք", "Կոմունալ և ընթացիկ վճարումներ", "Սպասարկման հայտերի հսկողություն"]
         : lang === "ru"
@@ -142,12 +110,7 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
         : ["Resident communication & directory", "Building fees & online collection", "Maintenance ticket coordination"],
     },
     {
-      badge: lang === "hy" ? "Գույքերի պորտֆել" : lang === "ru" ? "Портфель объектов" : "Portfolio Ops",
-      metrics: [
-        { label: lang === "hy" ? "Գույքեր" : lang === "ru" ? "Объекты" : "Properties", val: "Multi" },
-        { label: lang === "hy" ? "Պայմանագրեր" : lang === "ru" ? "Договоры" : "Leases", val: "Digital" },
-        { label: lang === "hy" ? "Եկամուտ" : lang === "ru" ? "Доходность" : "Reports", val: "Auto" },
-      ],
+      badge: tr("Գույքերի պորտֆել", "Портфель объектов", "For owners"),
       features: lang === "hy"
         ? ["Բազմակի գույքերի կենտրոնացում", "Թվային պայմանագրեր և ստորագրում", "Ավտոմատացված ֆինանսական հաշվետվություն"]
         : lang === "ru"
@@ -156,123 +119,41 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
     },
   ];
 
-  /* Global cursor tracking → CSS variables (throttled via rAF) */
-  const handlePointerMove = (e) => {
-    const el = rootRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    pointerRef.current = { x, y };
-    if (rafRef.current) return;
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = 0;
-      el.style.setProperty("--mx", `${x}px`);
-      el.style.setProperty("--my", `${y}px`);
-      el.style.setProperty("--nx", ((x / r.width) * 2 - 1).toFixed(3));
-      el.style.setProperty("--ny", ((y / r.height) * 2 - 1).toFixed(3));
-    });
-  };
-
-  const handlePointerLeave = () => {
-    pointerRef.current = null;
-    const el = rootRef.current;
-    if (!el) return;
-    el.style.setProperty("--nx", "0");
-    el.style.setProperty("--ny", "0");
-  };
-
-  /* Per-panel spotlight + tilt variables */
-  const handlePanelMove = (e) => {
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    el.style.setProperty("--px", `${x}px`);
-    el.style.setProperty("--py", `${y}px`);
-    el.style.setProperty("--tx", ((x / r.width) * 2 - 1).toFixed(3));
-    el.style.setProperty("--ty", ((y / r.height) * 2 - 1).toFixed(3));
-  };
-
-  const handlePanelLeave = (e) => {
-    e.currentTarget.style.setProperty("--tx", "0");
-    e.currentTarget.style.setProperty("--ty", "0");
-    setHoveredIndex(null);
-  };
-
-  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
-
   return (
-    <main
-      ref={rootRef}
-      className={`welcome-screen-fullscreen ${hoveredIndex !== null ? "has-hover" : ""}`}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-    >
-      {/* Ambient background: parallax layers + particle network */}
-      <div className="ws-bg-canvas" aria-hidden="true">
-        <div className="ws-layer" style={{ "--d": 18 }}>
-          <div className="ws-ambient-blob ws-ambient-blob-1" />
-        </div>
-        <div className="ws-layer" style={{ "--d": -26 }}>
-          <div className="ws-ambient-blob ws-ambient-blob-2" />
-        </div>
-        <div className="ws-layer" style={{ "--d": 10 }}>
-          <div className="ws-ambient-blob ws-ambient-blob-3" />
-        </div>
-        <div className="ws-layer" style={{ "--d": 34 }}>
-          <div className="ws-ambient-ring ws-ambient-ring-1" />
-        </div>
-        <div className="ws-layer" style={{ "--d": -40 }}>
-          <div className="ws-ambient-ring ws-ambient-ring-2" />
-        </div>
-        <div className="ws-ambient-grid" />
-        <ParticleField pointerRef={pointerRef} />
-        <div className="ws-cursor-glow" />
-        <div className="ws-cursor-ring" />
-      </div>
+    <main className="wm-root">
+      <div className="wm-glow wm-glow-1" aria-hidden="true" />
+      <div className="wm-glow wm-glow-2" aria-hidden="true" />
 
-      {/* Top compact bar */}
-      <header className="ws-topbar">
-        <a className="ws-logo" href="#top" aria-label="Arendnik">
+      <header className="wm-top">
+        <a className="wm-logo" href="#top" aria-label="Arendnik">
           <img src={logo} alt="Arendnik" />
         </a>
-
-        <div className="ws-topbar-center">
-          <span className="ws-kicker-dot" />
-          <span className="ws-kicker-text">{t.welcomeKicker}</span>
-        </div>
-
-        <div className="ws-topbar-right">
+        <div className="wm-top-right">
           <LanguageControl lang={lang} onLanguageChange={onLanguageChange} />
-          <a className="ws-login-btn" href="/auth-preview">
-            {copy[lang].login || (lang === "hy" ? "Մուտք" : lang === "ru" ? "Войти" : "Log in")}
+          <a className="wm-login" href="/auth-preview">
+            {copy[lang].login || tr("Մուտք", "Войти", "Log in")}
           </a>
         </div>
       </header>
 
-      {/* Split-screen panels */}
-      <section
-        className={`ws-split-container ${hoveredIndex !== null ? `hovered-panel-${hoveredIndex}` : ""}`}
-        aria-label={t.chooseLabel}
-      >
-        {t.roles.map((role, index) => {
-          const isHovered = hoveredIndex === index;
-          const isDimmed = hoveredIndex !== null && hoveredIndex !== index;
-          const hls = roleHighlights[index];
+      <section className="wm-hero">
+        <h1 className="wm-title">{t.welcomeTitle}</h1>
+        <p className="wm-sub">{t.chooseLabel}</p>
+      </section>
 
+      <section className="wm-cards" aria-label={t.chooseLabel}>
+        {t.roles.map((role, index) => {
+          const hl = highlights[index];
           return (
             <article
               key={role.name}
               tabIndex={0}
               role="button"
-              style={{ "--i": index }}
-              className={`ws-panel ws-panel-${index} ${isHovered ? "is-expanded" : ""} ${isDimmed ? "is-dimmed" : ""}`}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseMove={handlePanelMove}
-              onMouseLeave={handlePanelLeave}
-              onFocus={() => setHoveredIndex(index)}
-              onBlur={() => setHoveredIndex(null)}
+              className={`wm-card wm-card-${index} ${active === index ? "is-active" : ""}`}
+              onMouseEnter={() => setActive(index)}
+              onMouseLeave={() => setActive(null)}
+              onFocus={() => setActive(index)}
+              onBlur={() => setActive(null)}
               onClick={() => onChoose(index)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -281,82 +162,52 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
                 }
               }}
             >
-              {/* Cursor-following spotlight + grid */}
-              <div className="ws-panel-bg" aria-hidden="true">
-                <div className="ws-panel-spot" />
-                <div className="ws-panel-grid-lines" />
-              </div>
-
-              <div className="ws-panel-header ws-rise" style={{ "--s": 0 }}>
-                <span className="ws-panel-num">0{index + 1}</span>
-                <span className="ws-panel-badge">{hls.badge}</span>
-                <span className="ws-panel-icon-wrap" aria-hidden="true">
-                  <Ic n={roleIcons[index]} />
+              <div className="wm-card-art">
+                <Scene variant={index} />
+                <span className="wm-card-badge">
+                  <span className="wm-card-badge-icon" aria-hidden="true">
+                    <Ic n={roleIcons[index]} />
+                  </span>
+                  {hl.badge}
                 </span>
               </div>
 
-              <div className="ws-panel-main">
-                <span className="ws-panel-audience-tag ws-rise" style={{ "--s": 1 }}>{role.kicker}</span>
-                <h2 className="ws-panel-title ws-rise" style={{ "--s": 2 }}>{role.name}</h2>
-                <p className="ws-panel-desc ws-rise" style={{ "--s": 3 }}>{role.descriptor}</p>
+              <div className="wm-card-body">
+                <div className="wm-card-text">
+                  <span className="wm-card-kicker">{role.kicker}</span>
+                  <h2 className="wm-card-title">{role.name}</h2>
+                  <p className="wm-card-desc">{role.descriptor}</p>
 
-                <div className="ws-panel-features">
-                  {hls.features.map((item, fIdx) => (
-                    <div
-                      key={fIdx}
-                      className="ws-feature-pill ws-rise"
-                      style={{ "--s": 4 + fIdx }}
-                    >
-                      <span className="ws-feature-bullet" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                  <ul className="wm-list">
+                    {hl.features.map((item) => (
+                      <li key={item}>
+                        <span className="wm-check" aria-hidden="true">
+                          <svg viewBox="0 0 16 16" width="10" height="10">
+                            <path d="M3 8.5l3.2 3L13 4.8" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <div className="ws-panel-metrics ws-rise" style={{ "--s": 7 }}>
-                  {hls.metrics.map((m, mIdx) => (
-                    <div key={mIdx} className="ws-metric-item">
-                      <span className="ws-metric-val">{m.val}</span>
-                      <span className="ws-metric-label">{m.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="ws-panel-footer ws-rise" style={{ "--s": 8 }}>
-                <div className="ws-cta-button">
-                  <span className="ws-cta-text">{t.enter}</span>
-                  <span className="ws-cta-arrow" aria-hidden="true">
+                <div className="wm-cta">
+                  {/* <span>{t.enter}</span> */}
+                  <span className="wm-cta-arrow" aria-hidden="true">
                     <Ic n="arrow" />
                   </span>
                 </div>
-                <span className="ws-panel-hint">
-                  {lang === "hy"
-                    ? "Սեղմեք մուտք գործելու համար"
-                    : lang === "ru"
-                    ? "Нажмите для входа"
-                    : "Click to explore path"}
-                </span>
               </div>
-
-              <div className="ws-panel-active-bar" aria-hidden="true" />
             </article>
           );
         })}
       </section>
 
-      {/* Bottom compact status bar */}
-      <footer className="ws-bottombar">
-        <div className="ws-bottombar-left">
-          <span className="ws-brand-mark">Arendnik</span>
-          <span className="ws-brand-sep" />
-          <span className="ws-tagline-text">{t.welcomeTitle}</span>
-        </div>
-        <div className="ws-bottombar-right">
-          <span>{t.welcomeFooterPlace}</span>
-          <span className="ws-brand-sep" />
-          <span>{t.welcomeFooterLine}</span>
-        </div>
+      <footer className="wm-foot">
+        <span>{t.welcomeFooterPlace}</span>
+        <span className="wm-foot-dot" />
+        <span>{t.welcomeFooterLine}</span>
       </footer>
     </main>
   );
