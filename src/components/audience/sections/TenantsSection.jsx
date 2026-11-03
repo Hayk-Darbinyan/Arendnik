@@ -8,9 +8,11 @@ export function TenantsSection({ source }) {
       <div className="w tnw">
         <div>
           <h2 className="rv">{source.tenT}</h2>
-          <p className="sub rv" style={{ "--i": 1 }}>
-            {source.tenS}
-          </p>
+          {source.tenS && (
+            <p className="sub rv" style={{ "--i": 1 }}>
+              {source.tenS}
+            </p>
+          )}
         </div>
         <div className="tenants-grid">
           {source.ten.map(([h, p], i) => (

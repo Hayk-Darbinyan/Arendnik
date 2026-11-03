@@ -68,7 +68,7 @@ export function HeroSection({ role, source, b1Ref, b2Ref }) {
           </span>
           <span className="fc f3">
             <Ic n="bell" />
-            {source.why[5][0]}
+              {source.why[source.why.length - 1][0]}
           </span>
         </div>
       </div>

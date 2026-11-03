@@ -10,7 +10,7 @@ export function WhySection({ source }) {
       <div className="w">
         <h2 className="rv c">{source.whyT}</h2>
         <div className="why">
-          {WHY_ORDER.map((idx, k) => {
+          {WHY_ORDER.filter((idx) => idx < source.why.length).map((idx, k) => {
             const [h, p] = source.why[idx];
             return (
               <article

@@ -22,6 +22,7 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
   const t = copy[lang];
   const source = T[lang];
   const role = t.roles[index];
+  const audienceSource = { ...source, ...role };
   const phone = PHONE;
   const TEL = "tel:" + phone.replace(/\s/g, "");
 
@@ -96,13 +97,13 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
 
       <main id="top">
         {/* ── HERO ── */}
-        <HeroSection role={role} source={source} b1Ref={b1} b2Ref={b2} />
+        <HeroSection role={role} source={audienceSource} b1Ref={b1} b2Ref={b2} />
 
         {/* ── ABOUT ── */}
         <AboutSection source={source} />
 
         {/* ── WHY ── */}
-        <WhySection source={source} />
+        <WhySection source={audienceSource} />
 
         {/* ── TOOLS ── */}
         <ToolsSection source={source} />
@@ -111,7 +112,7 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
         <HowSection source={source} />
 
         {/* ── TENANTS SECTION ── */}
-        <TenantsSection source={source} />
+        <TenantsSection source={audienceSource} />
 
         {/* ── APP SECTION ── */}
         <AppSection source={source} />
