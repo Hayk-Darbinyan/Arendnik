@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Ic } from "../shared/Icons.jsx";
-import { Mock } from "../shared/Mock.jsx";
+import { ToolContentPreview } from "./ToolContentPreview.jsx";
 
 const TOOL_ICON = ["chat", "bell", "camera", "tool", "doc", "link", "pay", "chart"];
 const TOOL_MOCK = ["chat", "remind", "maint", "tasks", "doc", "link", "card", "chart"];
 
-export function ToolPreview({ tools, s, inline = false }) {
+export function ToolPreview({ tools, s, lang, inline = false }) {
   return (
     <div className={`tp ${inline ? "tp-inline" : "tp-desktop"}`}>
       <div className="tph">
@@ -15,13 +15,13 @@ export function ToolPreview({ tools, s, inline = false }) {
         <b>{tools[s]}</b>
       </div>
       <div className="tpb" key={s}>
-        <Mock kind={TOOL_MOCK[s]} />
+        <ToolContentPreview index={s} lang={lang} />
       </div>
     </div>
   );
 }
 
-export function ToolsInteractive({ tools }) {
+export function ToolsInteractive({ tools, lang }) {
   const [s, setS] = useState(0);
   const [stacked, setStacked] = useState(
     () => window.matchMedia("(max-width: 1024px)").matches
@@ -55,16 +55,16 @@ export function ToolsInteractive({ tools }) {
               </span>
               {x}
             </button>
-            {i === s && <ToolPreview tools={tools} s={s} inline />}
+            {i === s && <ToolPreview tools={tools} s={s} lang={lang} inline />}
           </div>
         ))}
       </div>
-      <ToolPreview tools={tools} s={s} />
+      <ToolPreview tools={tools} s={s} lang={lang} />
     </div>
   );
 }
 
-export function ToolsSection({ source }) {
+export function ToolsSection({ source, lang }) {
   return (
     <section className="sec" id="tools">
       <div className="w">
@@ -75,7 +75,7 @@ export function ToolsSection({ source }) {
           </p>
         </div>
         <div className="rv" style={{ "--i": 2 }}>
-          <ToolsInteractive tools={source.tools} />
+          <ToolsInteractive tools={source.tools} lang={lang} />
         </div>
       </div>
     </section>

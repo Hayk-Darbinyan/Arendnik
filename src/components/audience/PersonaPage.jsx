@@ -106,7 +106,7 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
         <WhySection source={audienceSource} />
 
         {/* ── TOOLS ── */}
-        <ToolsSection source={source} />
+        <ToolsSection source={source} lang={lang} />
 
         {/* ── HOW IT WORKS ── */}
         <HowSection source={source} />
