@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Ic } from "../shared/Icons.jsx";
 import { Mock } from "../shared/Mock.jsx";
 
-const TOOL_ICON = ["chat", "bell", "tool", "doc", "link", "pay", "chart"];
-const TOOL_MOCK = ["chat", "remind", "maint", "doc", "link", "card", "chart"];
+const TOOL_ICON = ["chat", "bell", "camera", "tool", "doc", "link", "pay", "chart"];
+const TOOL_MOCK = ["chat", "remind", "maint", "tasks", "doc", "link", "card", "chart"];
 
 export function ToolPreview({ tools, s, inline = false }) {
   return (
@@ -36,7 +36,7 @@ export function ToolsInteractive({ tools }) {
 
   useEffect(() => {
     if (stacked) return;
-    const i = setTimeout(() => setS((x) => (x + 1) % 7), 5200);
+    const i = setTimeout(() => setS((x) => (x + 1) % tools.length), 5200);
     return () => clearTimeout(i);
   }, [s, stacked]);
 

@@ -1,4 +1,5 @@
 import logo from "../../../assets/arendnik.png";
+import { BrandText } from "../shared/BrandText.jsx";
 
 const ANCHORS = ["", "about", "why", "tools", "how", "tenants", "app", "pricing"];
 
@@ -12,11 +13,11 @@ export function PersonaFooter({ source }) {
         <nav>
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
             <a key={i} href={"#" + ANCHORS[i]}>
-              {source.rooms[i]}
+              <BrandText>{source.rooms[i]}</BrandText>
             </a>
           ))}
         </nav>
-        <small>© Arendnik</small>
+        <small>© <BrandText>Arendnik</BrandText></small>
       </div>
     </footer>
   );

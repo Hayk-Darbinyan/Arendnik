@@ -2,6 +2,7 @@ import { useState } from "react";
 import logo from "../../assets/arendnik.png";
 import copy from "../../experiences.js";
 import { Ic } from "./shared/Icons.jsx";
+import { BrandText } from "./shared/BrandText.jsx";
 import { LanguageControl } from "./shared/LanguageControl.jsx";
 import "./welcome.css";
 
@@ -100,25 +101,6 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
   const roleIcons = ["building", "briefcase"];
   const tr = (hy, ru, en) => (lang === "hy" ? hy : lang === "ru" ? ru : en);
 
-  const highlights = [
-    {
-      badge: tr("Շենքի կառավարում", "Управление зданием", "For buildings"),
-      features: lang === "hy"
-        ? ["Բնակիչների կապ և համայնք", "Կոմունալ և ընթացիկ վճարումներ", "Սպասարկման հայտերի հսկողություն"]
-        : lang === "ru"
-        ? ["Связь с жильцами и сообщество", "Контроль платежей и сборов", "Заявки на ремонт и обслуживание"]
-        : ["Resident communication & directory", "Building fees & online collection", "Maintenance ticket coordination"],
-    },
-    {
-      badge: tr("Գույքերի պորտֆել", "Портфель объектов", "For owners"),
-      features: lang === "hy"
-        ? ["Բազմակի գույքերի կենտրոնացում", "Թվային պայմանագրեր և ստորագրում", "Ավտոմատացված ֆինանսական հաշվետվություն"]
-        : lang === "ru"
-        ? ["Единый реестр всех объектов", "Цифровые договоры аренды", "Автоматические финансовые отчеты"]
-        : ["Unified multi-property overview", "Digital lease contracts & signing", "Automated revenue & payment tracking"],
-    },
-  ];
-
   return (
     <main className="wm-root">
       <div className="wm-glow wm-glow-1" aria-hidden="true" />
@@ -137,13 +119,12 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
       </header>
 
       <section className="wm-hero">
-        <h1 className="wm-title">{t.welcomeTitle}</h1>
+        <h1 className="wm-title"><BrandText>{t.welcomeTitle}</BrandText></h1>
         <p className="wm-sub">{t.chooseLabel}</p>
       </section>
 
       <section className="wm-cards" aria-label={t.chooseLabel}>
         {t.roles.map((role, index) => {
-          const hl = highlights[index];
           return (
             <article
               key={role.name}
@@ -168,7 +149,7 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
                   <span className="wm-card-badge-icon" aria-hidden="true">
                     <Ic n={roleIcons[index]} />
                   </span>
-                  {hl.badge}
+                  {role.name}
                 </span>
               </div>
 
@@ -176,10 +157,10 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
                 <div className="wm-card-text">
                   <span className="wm-card-kicker">{role.kicker}</span>
                   <h2 className="wm-card-title">{role.name}</h2>
-                  <p className="wm-card-desc">{role.descriptor}</p>
+                  <p className="wm-card-desc">{role.featureTitle}</p>
 
                   <ul className="wm-list">
-                    {hl.features.map((item) => (
+                    {role.features.slice(0, 3).map(([item]) => (
                       <li key={item}>
                         <span className="wm-check" aria-hidden="true">
                           <svg viewBox="0 0 16 16" width="10" height="10">

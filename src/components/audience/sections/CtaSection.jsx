@@ -1,13 +1,15 @@
+import { BrandText } from "../shared/BrandText.jsx";
+
 export function CtaSection({ role, t, tel }) {
   return (
     <section className="experience-cta" id="experience-contact">
       <div>
         <span className="experience-eyebrow">
           <i />
-          Arendnik
+          <BrandText>Arendnik</BrandText>
         </span>
-        <h2>{role.ctaTitle}</h2>
-        <p>{role.ctaCopy}</p>
+        <h2><BrandText>{role.ctaTitle}</BrandText></h2>
+        <p><BrandText>{role.ctaCopy}</BrandText></p>
       </div>
       <a className="experience-button experience-button-light" href={tel}>
         {t.contact}

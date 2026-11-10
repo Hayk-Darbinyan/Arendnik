@@ -4,6 +4,11 @@ export function AboutSection({ source }) {
       <div className="w about">
         <div>
           <h2 className="rv">{source.aboutT}</h2>
+          <ul className="about-domains rv" style={{ "--i": 1 }}>
+            {source.domains.map((domain) => (
+              <li key={domain}>{domain}</li>
+            ))}
+          </ul>
           <p className="sub rv" style={{ "--i": 1 }}>
             {source.aboutP}
           </p>

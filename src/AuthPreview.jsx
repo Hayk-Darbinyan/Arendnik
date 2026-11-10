@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import logo from './assets/arendnik.png'
+import { BrandText } from './components/audience/shared/BrandText.jsx'
 
 const PROPERTY_IMAGE = 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1600&q=85'
 
@@ -29,7 +30,7 @@ export default function AuthPreview() {
             <img src={logo} alt="Arendnik" />
           </a>
           <div className="auth-topline">
-            <span>{isSignup ? 'Already have an account?' : 'New to Arendnik?'}</span>
+            <span><BrandText>{isSignup ? 'Already have an account?' : 'New to Arendnik?'}</BrandText></span>
             <button type="button" onClick={() => { setMode(isSignup ? 'login' : 'signup'); setShowPassword(false) }}>
               {isSignup ? 'Log in' : 'Create account'}
             </button>
@@ -37,7 +38,7 @@ export default function AuthPreview() {
 
           <div className="auth-heading">
             <span className="auth-kicker">{isSignup ? 'GET STARTED' : 'WELCOME BACK'}</span>
-            <h2 id="auth-title">{isSignup ? 'Create your account' : 'Sign in to Arendnik'}</h2>
+            <h2 id="auth-title"><BrandText>{isSignup ? 'Create your account' : 'Sign in to Arendnik'}</BrandText></h2>
             <p>{isSignup ? 'Set up your account to manage your properties.' : 'Enter your details to continue to your workspace.'}</p>
           </div>
 
@@ -82,9 +83,9 @@ export default function AuthPreview() {
             <button className="btn auth-submit" type="submit">{isSignup ? 'Create account' : 'Log in'}<span aria-hidden="true">→</span></button>
           </form>
 
-          <p className="auth-legal">By continuing, you agree to use Arendnik in accordance with its terms and privacy policy.</p>
+          <p className="auth-legal"><BrandText>By continuing, you agree to use Arendnik in accordance with its terms and privacy policy.</BrandText></p>
         </div>
-        <footer className="auth-footer"><span>© Arendnik</span><span>Property management platform</span></footer>
+        <footer className="auth-footer"><span>© <BrandText>Arendnik</BrandText></span><span>Property management platform</span></footer>
       </section>
     </main>
   )

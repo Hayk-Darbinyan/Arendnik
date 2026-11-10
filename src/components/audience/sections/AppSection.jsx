@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import logo from "../../../assets/arendnik.png";
 import { LINKS } from "../../../links.js";
 import { Ic } from "../shared/Icons.jsx";
+import { BrandText } from "../shared/BrandText.jsx";
 import { Mock } from "../shared/Mock.jsx";
 import { Store } from "../shared/Store.jsx";
 
@@ -58,7 +59,7 @@ export function AppSection({ source }) {
         <div>
           <h2 className="rv">{source.appT}</h2>
           <p className="sub rv" style={{ "--i": 1 }}>
-            {source.appS}
+            <BrandText>{source.appS}</BrandText>
           </p>
           <ul className="al">
             {source.app.map((x, i) => (

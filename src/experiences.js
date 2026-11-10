@@ -1,7 +1,7 @@
 const copy = {
   en: {
-    welcomeKicker: "Arendnik` A clearer way to manage property",
-    welcomeTitle: "Arendnik` A clearer way to manage property",
+    welcomeKicker: "Arendnik: A clearer way to manage property",
+    welcomeTitle: "Arendnik: A clearer way to manage property",
     welcomeCopy: "Choose the role that best describes you. We’ll show you the tools and workflows that matter to your day.",
     welcomeFooterPlace: "Armenia",
     welcomeFooterLine: "Property, made clearer",
@@ -25,7 +25,7 @@ const copy = {
         visualTitle: "Building workspace",
         visualLabels: ["Residents", "Payments", "Requests", "Tasks"],
         visualNote: "Building activity",
-        featureTitle: "The everyday work, connected.",
+        featureTitle: "The everyday work, connected",
         featureIntro: "Keep building operations visible and easier to coordinate, from one shared workspace.",
         features: [
           ["Resident management", "Keep resident details and communication connected to the building."],
@@ -68,7 +68,7 @@ const copy = {
         visualTitle: "Portfolio workspace",
         visualLabels: ["Properties", "Tenants", "Payments", "Tasks"],
         visualNote: "Rental operations",
-        featureTitle: "A working view across every property.",
+        featureTitle: "A working view across every property",
         featureIntro: "Keep recurring rental work structured and spend less time tracking details by hand.",
         features: [
           ["Property information", "Keep property details and rental information organized together."],
@@ -87,8 +87,8 @@ const copy = {
     ],
   },
   hy: {
-    welcomeKicker: "Arendnik` Ձեր գույքի կառավարման հստակ ձևը",
-    welcomeTitle: "Arendnik` Ձեր գույքի կառավարման հստակ ձևը",
+    welcomeKicker: "Arendnik: Ձեր գույքի կառավարման հստակ ձևը",
+    welcomeTitle: "Arendnik: Ձեր գույքի կառավարման հստակ ձևը",
     welcomeCopy: "Ընտրեք ձեզ համապատասխանող դերը, և կտեսնեք ձեր առօրյա աշխատանքի համար կարևոր գործիքներն ու գործընթացները։",
     welcomeFooterPlace: "Հայաստան",
     welcomeFooterLine: "Գույքի կառավարումը՝ ավելի հստակ",
@@ -112,7 +112,7 @@ const copy = {
         visualTitle: "Շենքի աշխատանքային տարածք",
         visualLabels: ["Բնակիչներ", "Վճարումներ", "Հայտեր", "Առաջադրանքներ"],
         visualNote: "Շենքի ընթացիկ աշխատանքներ",
-        featureTitle: "Առօրյա աշխատանքը՝ փոխկապակցված։",
+        featureTitle: "Առօրյա աշխատանքը՝ փոխկապակցված",
         featureIntro: "Շենքի գործընթացները դարձրեք տեսանելի և հեշտ համակարգելի՝ մեկ ընդհանուր աշխատանքային տարածքից։",
         features: [
           ["Բնակիչների կառավարում", "Բնակիչների տվյալներն ու հաղորդակցությունը կապեք շենքի հետ։"],
@@ -155,7 +155,7 @@ const copy = {
         visualTitle: "Գույքերի աշխատանքային տարածք",
         visualLabels: ["Գույքեր", "Վարձակալներ", "Վճարումներ", "Առաջադրանքներ"],
         visualNote: "Վարձակալության գործընթացներ",
-        featureTitle: "Աշխատանքային պատկեր՝ յուրաքանչյուր գույքի համար։",
+        featureTitle: "Աշխատանքային պատկեր՝ յուրաքանչյուր գույքի համար",
         featureIntro: "Կազմակերպեք վարձակալության կրկնվող աշխատանքները և քիչ ժամանակ ծախսեք մանրամասները ձեռքով հետևելու վրա։",
         features: [
           ["Գույքի տվյալներ", "Գույքի և վարձակալության տվյալները պահեք միասին և կազմակերպված։"],
@@ -174,8 +174,8 @@ const copy = {
     ],
   },
   ru: {
-    welcomeKicker: "Arendnik` Понятное управление недвижимостью",
-    welcomeTitle: "Arendnik` Понятное управление недвижимостью",
+    welcomeKicker: "Arendnik: Понятное управление недвижимостью",
+    welcomeTitle: "Arendnik: Понятное управление недвижимостью",
     welcomeCopy: "Выберите подходящую роль. Мы покажем инструменты и процессы, важные для вашей повседневной работы.",
     welcomeFooterPlace: "Армения",
     welcomeFooterLine: "Понятное управление недвижимостью",
@@ -199,7 +199,7 @@ const copy = {
         visualTitle: "Рабочее пространство здания",
         visualLabels: ["Жильцы", "Платежи", "Заявки", "Задачи"],
         visualNote: "Текущие дела здания",
-        featureTitle: "Повседневные дела связаны между собой.",
+        featureTitle: "Повседневные дела связаны между собой",
         featureIntro: "Сделайте процессы здания нагляднее и проще для координации в общем рабочем пространстве.",
         features: [
           ["Работа с жильцами", "Свяжите данные жильцов и общение с конкретным зданием."],
@@ -242,7 +242,7 @@ const copy = {
         visualTitle: "Рабочее пространство портфеля",
         visualLabels: ["Объекты", "Арендаторы", "Платежи", "Задачи"],
         visualNote: "Операции по аренде",
-        featureTitle: "Рабочая картина по каждому объекту.",
+        featureTitle: "Рабочая картина по каждому объекту",
         featureIntro: "Систематизируйте регулярные процессы аренды и тратьте меньше времени на ручное отслеживание деталей.",
         features: [
           ["Информация об объектах", "Храните сведения об объектах и аренде вместе."],

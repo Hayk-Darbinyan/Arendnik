@@ -58,8 +58,22 @@ export function Mock({ kind }) {
       );
     case "link":
       return (
-        <div className="mock nodes">
-          <b /><em /><b /><em /><b />
+        <div className="mock listing-sync">
+          <div className="listing-source">
+            <span className="listing-home"><Ic n="home" /></span>
+            <div className="listing-copy"><S w={72} /><S w={46} c="s" /></div>
+            <span className="listing-ok"><Ic n="check" /></span>
+          </div>
+          <div className="listing-flow"><Ic n="arrow" /></div>
+          <div className="listing-destinations">
+            {r3.map((i) => (
+              <div className="listing-destination" key={i}>
+                <span className="listing-globe"><Ic n="globe" /></span>
+                <div className="grow"><S w={72 - i * 10} /><S w={38} c="s" /></div>
+                <span className="listing-ok"><Ic n="check" /></span>
+              </div>
+            ))}
+          </div>
         </div>
       );
     case "card":

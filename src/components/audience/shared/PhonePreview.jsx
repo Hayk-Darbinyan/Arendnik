@@ -1,4 +1,5 @@
 import logo from "../../../assets/arendnik.png";
+import { BrandText } from "./BrandText.jsx";
 
 export const SYMBOLS = ["⌂", "▦", "◌", "✓"];
 
@@ -13,7 +14,7 @@ export function ProductWindow({ role, index }) {
     <div className={`product-window product-window-${index}`}>
       <div className="product-window-bar">
         <span className="product-window-brand">
-          <i /> Arendnik
+          <i /> <BrandText>Arendnik</BrandText>
         </span>
         <div className="product-window-tools">
           <i />

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { LINKS } from "../../../links.js";
 import { Ic } from "../shared/Icons.jsx";
+import { BrandText } from "../shared/BrandText.jsx";
 
 export function HowItWorks({ steps, howT, watch }) {
   const [a, setA] = useState(0);
@@ -42,7 +43,7 @@ export function HowItWorks({ steps, howT, watch }) {
   return (
     <div className="how">
       <div className="hl">
-        <h2 className="rv">{howT}</h2>
+        <h2 className="rv"><BrandText>{howT}</BrandText></h2>
         <div className="big" aria-hidden="true">
           {String(a + 1).padStart(2, "0")}
           <small>/ 08</small>
@@ -50,7 +51,7 @@ export function HowItWorks({ steps, howT, watch }) {
         <div className="prog">
           <i style={{ transform: `scaleX(${(a + 1) / 8})` }} />
         </div>
-        <p className="cur">{steps[a][0]}</p>
+        <p className="cur"><BrandText>{steps[a][0]}</BrandText></p>
       </div>
       <ol className="stl">
         {steps.map(([h, p], i) => (
@@ -62,8 +63,8 @@ export function HowItWorks({ steps, howT, watch }) {
           >
             <span className="n">{i + 1}</span>
             <div>
-              <h3>{h}</h3>
-              <p>{p}</p>
+              <h3><BrandText>{h}</BrandText></h3>
+              <p><BrandText>{p}</BrandText></p>
               {LINKS.tutorials[i] && (
                 <a
                   className="lnk"

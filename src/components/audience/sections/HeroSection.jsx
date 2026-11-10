@@ -1,5 +1,6 @@
 import { Counter } from "../shared/Counter.jsx";
 import { Ic } from "../shared/Icons.jsx";
+import { BrandText } from "../shared/BrandText.jsx";
 import { Mock } from "../shared/Mock.jsx";
 import { Photos } from "../shared/Photos.jsx";
 
@@ -11,10 +12,10 @@ export function HeroSection({ role, source, b1Ref, b2Ref }) {
       <div className="w hg">
         <div className="hc">
           <h1 className="rv" style={{ "--i": 1 }}>
-            {role.title}
+            <BrandText>{role.title}</BrandText>
           </h1>
           <p className="lead rv" style={{ "--i": 2 }}>
-            {role.intro}
+            <BrandText>{role.intro}</BrandText>
           </p>
           <div className="ctas rv" style={{ "--i": 3 }}>
             <a className="btn" href="#how">
@@ -23,14 +24,6 @@ export function HeroSection({ role, source, b1Ref, b2Ref }) {
             <a className="btn ghost" href="#pricing">
               {source.cta[1]}
             </a>
-          </div>
-          <div className="facts rv" style={{ "--i": 4 }}>
-            {source.stats.map(([n, s, l], i) => (
-              <div key={i}>
-                <Counter to={n} suffix={s} />
-                <span>{l}</span>
-              </div>
-            ))}
           </div>
           <p className="note rv" style={{ "--i": 5 }}>
             <Ic n="check" />
@@ -58,18 +51,6 @@ export function HeroSection({ role, source, b1Ref, b2Ref }) {
               <Mock kind="chart" />
             </div>
           </div>
-          <span className="fc f1">
-            <Ic n="pay" />
-            {source.tools[5]}
-          </span>
-          <span className="fc f2">
-            <Ic n="doc" />
-            {source.why[2][0]}
-          </span>
-          <span className="fc f3">
-            <Ic n="bell" />
-              {source.why[source.why.length - 1][0]}
-          </span>
         </div>
       </div>
     </section>

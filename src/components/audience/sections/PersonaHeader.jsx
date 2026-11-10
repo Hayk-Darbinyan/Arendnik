@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import logo from "../../../assets/arendnik.png";
+import { BrandText } from "../shared/BrandText.jsx";
 
 const ANCHORS = ["", "about", "why", "tools", "how", "tenants", "app", "pricing"];
 const navLinks = [1, 3, 4, 5, 6, 7];
@@ -66,7 +67,7 @@ export function PersonaHeader({ lang, source, t, onChoose, onLanguageChange, hea
               href={"#" + ANCHORS[i]}
               style={{ fontSize: ".8rem", whiteSpace: "nowrap" }}
             >
-              {source.rooms[i]}
+              <BrandText>{source.rooms[i]}</BrandText>
             </a>
           ))}
         </nav>
@@ -113,7 +114,7 @@ export function PersonaHeader({ lang, source, t, onChoose, onLanguageChange, hea
       <div className={"mnav" + (open ? " open" : "")}>
         {[1, 2, 3, 4, 5, 6, 7].map((i) => (
           <a key={i} href={"#" + ANCHORS[i]} onClick={() => setOpen(false)}>
-            {source.rooms[i]}
+            <BrandText>{source.rooms[i]}</BrandText>
           </a>
         ))}
         <button
