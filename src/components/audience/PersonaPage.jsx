@@ -90,6 +90,7 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
         lang={lang}
         source={source}
         t={t}
+        isCommunity={index === 0}
         onChoose={onChoose}
         onLanguageChange={onLanguageChange}
         headRef={head}
@@ -100,7 +101,7 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
         <HeroSection role={role} source={audienceSource} b1Ref={b1} b2Ref={b2} />
 
         {/* ── ABOUT ── */}
-        <AboutSection source={source} />
+        {index !== 0 && <AboutSection source={source} />}
 
         {/* ── WHY ── */}
         <WhySection source={audienceSource} />
