@@ -8,10 +8,10 @@ export function TenantsSection({ source }) {
     <section className="sec tn" id="tenants">
       <div className="w tnw">
         <div>
-          <h2 className="rv"><BrandText>{source.tenT}</BrandText></h2>
+          <h2 className="rv">{source.tenT}</h2>
           {source.tenS && (
             <p className="sub rv" style={{ "--i": 1 }}>
-              <BrandText>{source.tenS}</BrandText>
+              {source.tenS}
             </p>
           )}
         </div>
