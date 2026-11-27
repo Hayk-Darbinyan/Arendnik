@@ -36,7 +36,7 @@ export default {
       ["7", "", "tools and features"],
     ],
     aboutT:
-      "Accounting, marketing, legal, communication and property management in one interface",
+      "Property management, all in one place",
     aboutP:
       "It helps save resources and makes business processes more convenient and efficient.",
     domains: [
@@ -207,7 +207,7 @@ export default {
       ["7", "", "инструментов и функций"],
     ],
     aboutT:
-      "Бухгалтерия, маркетинг, юридические вопросы, коммуникация и управление недвижимостью в одном интерфейсе",
+      "Все процессы управления недвижимостью в одном месте",
     aboutP:
       "Платформа помогает экономить ресурсы и делает бизнес-процессы удобнее и эффективнее.",
     domains: [
@@ -378,7 +378,7 @@ export default {
       ["7", "", "գործիք և հնարավորություն"],
     ],
     aboutT:
-      "Հաշվապահություն, մարքեթինգ, իրավական հարցեր, հաղորդակցություն և գույքի կառավարում՝ մեկ ինտերֆեյսում",
+      "Գույքի կառավարման բոլոր գործընթացները՝ մեկ հարթակում",
     aboutP:
       "Հարթակն օգնում է խնայել ռեսուրսները և բիզնես գործընթացները դարձնում է ավելի հարմար և արդյունավետ։",
     domains: [
