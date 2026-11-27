@@ -107,16 +107,16 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
         <WhySection source={audienceSource} />
 
         {/* ── TOOLS ── */}
-        <ToolsSection source={source} lang={lang} />
+        <ToolsSection source={audienceSource} lang={lang} />
 
         {/* ── HOW IT WORKS ── */}
-        <HowSection source={source} />
+        <HowSection source={audienceSource} />
 
         {/* ── TENANTS SECTION ── */}
         <TenantsSection source={audienceSource} />
 
         {/* ── APP SECTION ── */}
-        <AppSection source={source} />
+        <AppSection source={audienceSource} />
 
         {/* ── PRICING ── */}
         <PricingSection source={source} />
@@ -126,7 +126,7 @@ export function PersonaPage({ lang, index, onChoose, onLanguageChange }) {
       </main>
 
       {/* footer */}
-      <PersonaFooter source={source} />
+      <PersonaFooter source={source} isCommunity={index === 0} />
     </div>
   );
 }

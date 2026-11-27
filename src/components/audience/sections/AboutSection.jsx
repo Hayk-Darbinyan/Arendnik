@@ -1,4 +1,9 @@
 export function AboutSection({ source }) {
+  const n = source.domains.length;
+  const points = source.domains.map((_, i) => {
+    const a = ((-90 + (n % 2 ? 0 : 180 / n) + (i * 360) / n) * Math.PI) / 180;
+    return [+(50 + 42 * Math.cos(a)).toFixed(1), +(50 + 42 * Math.sin(a)).toFixed(1)];
+  });
   return (
     <section className="sec" id="about">
       <div className="w about">
@@ -15,7 +20,7 @@ export function AboutSection({ source }) {
         </div>
         <div className="hub rv in-hub" style={{ "--i": 1 }}>
           <svg viewBox="0 0 100 100" aria-hidden="true">
-            {[[50, 8], [90, 37], [75, 84], [25, 84], [10, 37]].map(([x, y], i) => (
+            {points.map(([x, y], i) => (
               <path
                 key={i}
                 d={`M50 50L${x} ${y}`}
@@ -32,8 +37,8 @@ export function AboutSection({ source }) {
               key={i}
               className="node"
               style={{
-                left: [50, 90, 75, 25, 10][i] + "%",
-                top: [8, 37, 84, 84, 37][i] + "%",
+                left: points[i][0] + "%",
+                top: points[i][1] + "%",
                 "--i": i,
               }}
             >

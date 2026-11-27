@@ -5,23 +5,24 @@ import { ToolContentPreview } from "./ToolContentPreview.jsx";
 const TOOL_ICON = ["chat", "bell", "camera", "tool", "doc", "link", "pay", "chart"];
 const TOOL_MOCK = ["chat", "remind", "maint", "tasks", "doc", "link", "card", "chart"];
 
-export function ToolPreview({ tools, s, lang, inline = false }) {
+export function ToolPreview({ tools, ids, s, lang, inline = false }) {
+  const id = ids[s];
   return (
     <div className={`tp ${inline ? "tp-inline" : "tp-desktop"}`}>
       <div className="tph">
         <span className="ib">
-          <Ic n={TOOL_ICON[s]} />
+          <Ic n={TOOL_ICON[id]} />
         </span>
-        <b>{tools[s]}</b>
+        <b>{tools[id]}</b>
       </div>
       <div className="tpb" key={s}>
-        <ToolContentPreview index={s} lang={lang} />
+        <ToolContentPreview index={id} lang={lang} />
       </div>
     </div>
   );
 }
 
-export function ToolsInteractive({ tools, lang }) {
+export function ToolsInteractive({ tools, ids = tools.map((_, i) => i), lang }) {
   const [s, setS] = useState(0);
   const [stacked, setStacked] = useState(
     () => window.matchMedia("(max-width: 1024px)").matches
@@ -36,30 +37,30 @@ export function ToolsInteractive({ tools, lang }) {
 
   useEffect(() => {
     if (stacked) return;
-    const i = setTimeout(() => setS((x) => (x + 1) % tools.length), 5200);
+    const i = setTimeout(() => setS((x) => (x + 1) % ids.length), 5200);
     return () => clearTimeout(i);
   }, [s, stacked]);
 
   return (
     <div className="tools">
       <div className="tl">
-        {tools.map((x, i) => (
-          <div key={i} className="tool-item">
+        {ids.map((id, i) => (
+          <div key={id} className="tool-item">
             <button
               className={i === s ? "on" : ""}
               aria-pressed={i === s}
               onClick={() => setS(i)}
             >
               <span className="ib">
-                <Ic n={TOOL_ICON[i]} />
+                <Ic n={TOOL_ICON[id]} />
               </span>
-              {x}
+              {tools[id]}
             </button>
-            {i === s && <ToolPreview tools={tools} s={s} lang={lang} inline />}
+            {i === s && <ToolPreview tools={tools} ids={ids} s={s} lang={lang} inline />}
           </div>
         ))}
       </div>
-      <ToolPreview tools={tools} s={s} lang={lang} />
+      <ToolPreview tools={tools} ids={ids} s={s} lang={lang} />
     </div>
   );
 }
@@ -75,7 +76,7 @@ export function ToolsSection({ source, lang }) {
           </p>
         </div>
         <div className="rv" style={{ "--i": 2 }}>
-          <ToolsInteractive tools={source.tools} lang={lang} />
+          <ToolsInteractive tools={source.tools} ids={source.toolIds} lang={lang} />
         </div>
       </div>
     </section>

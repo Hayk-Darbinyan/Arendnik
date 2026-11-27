@@ -8,7 +8,7 @@ export function WhySection({ source }) {
   return (
     <section className="sec tint" id="why">
       <div className="w">
-        <h2 className="rv c"><BrandText>{source.whyT}</BrandText></h2>
+        <h2 className="rv"><BrandText>{source.whyT}</BrandText></h2>
         <div className="why">
           {WHY_ORDER.filter((idx) => idx < source.why.length).map((idx, k) => {
             const [h, p] = source.why[idx];

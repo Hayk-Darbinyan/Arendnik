@@ -155,7 +155,6 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
 
               <div className="wm-card-body">
                 <div className="wm-card-text">
-                  <span className="wm-card-kicker">{role.kicker}</span>
                   <h2 className="wm-card-title">{role.name}</h2>
                   <p className="wm-card-desc">{role.featureTitle}</p>
 
@@ -184,12 +183,6 @@ export function Welcome({ lang, onChoose, onLanguageChange }) {
           );
         })}
       </section>
-
-      <footer className="wm-foot">
-        <span>{t.welcomeFooterPlace}</span>
-        <span className="wm-foot-dot" />
-        <span>{t.welcomeFooterLine}</span>
-      </footer>
     </main>
   );
 }

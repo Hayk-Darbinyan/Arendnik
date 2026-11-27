@@ -2,3 +2,5 @@ node_modules
 dist
 .preview
 server/leads.jsonl
+.DS_Store
+Arendnik commetns/

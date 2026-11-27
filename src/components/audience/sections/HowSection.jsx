@@ -46,10 +46,10 @@ export function HowItWorks({ steps, howT, watch }) {
         <h2 className="rv"><BrandText>{howT}</BrandText></h2>
         <div className="big" aria-hidden="true">
           {String(a + 1).padStart(2, "0")}
-          <small>/ 08</small>
+          <small>/ {String(steps.length).padStart(2, "0")}</small>
         </div>
         <div className="prog">
-          <i style={{ transform: `scaleX(${(a + 1) / 8})` }} />
+          <i style={{ transform: `scaleX(${(a + 1) / steps.length})` }} />
         </div>
         <p className="cur"><BrandText>{steps[a][0]}</BrandText></p>
       </div>

@@ -3,7 +3,7 @@ import { BrandText } from "../shared/BrandText.jsx";
 
 const ANCHORS = ["", "about", "why", "tools", "how", "tenants", "app", "pricing"];
 
-export function PersonaFooter({ source }) {
+export function PersonaFooter({ source, isCommunity }) {
   return (
     <footer className="ft">
       <div className="w">
@@ -11,9 +11,9 @@ export function PersonaFooter({ source }) {
           <img src={logo} alt="Arendnik" />
         </a>
         <nav>
-          {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+          {[1, 2, 3, 4, 5, 6, 7].filter((i) => !(isCommunity && i === 1)).map((i) => (
             <a key={i} href={"#" + ANCHORS[i]}>
-              <BrandText>{source.rooms[i]}</BrandText>
+              <BrandText>{isCommunity && i === 5 ? source.residentNav : source.rooms[i]}</BrandText>
             </a>
           ))}
         </nav>
